@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,KACE,+BACF,CAEA,OACE,iBAAkB,CAClB,oBACF","file":"main.94179951.chunk.css","sourcesContent":["body {\n  font-family: \"Roboto\", sans-serif;\n}\n\n.table {\n  overflow-y: scroll;\n  display: inline-table;\n}\n\n\n"]}

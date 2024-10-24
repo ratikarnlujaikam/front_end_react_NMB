@@ -1,0 +1,28 @@
+/* CSS for the custom legend */
+.custom-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .legend-marker {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+  }
+  
+  .legend-marker.line {
+    background-color: #1f77b4; /* Replace with your line color */
+    border-radius: 50%;
+  }
+  
+  .legend-marker.bar {
+    background-color: #ff7f0e; /* Replace with your bar color */
+  }
+  
