@@ -147,6 +147,8 @@ import Missing_part_daily from "./components/Missing_part/Missing_part_daily";
 import Importment_downtime_machine from "./components/Importment_downtime/Improment_downtime_Machine"
 import Importment_downtime_line from "./components/Importment_downtime/Improment_downtime_line"
 import Importment_downtime_case_detail from "./components/Importment_downtime/Improment_downtime_casedetail"
+
+import PC_shpiment from "./components/PC_shpiment/PC_shpiment";
 // import TargetPage from './TargetPage';
 
 const SecuredRoute = ({ component: Component, ...rest }) => (
@@ -425,6 +427,7 @@ export default class App extends Component {
             <SecuredRoute path="/AlarmTraning" component={AlarmTraning} />
             <SecuredRoute path="/ReportOJT" component={ReportOJT} />
             <SecuredRoute path="/Downtime_daily" component={Mainplan_daily} />
+            <SecuredRoute path="/PC_shipment" component={PC_shpiment} />
             <SecuredRoute
               path="/Downtime_monthly"
               component={Mainplan_monthly}

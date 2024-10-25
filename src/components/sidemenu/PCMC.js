@@ -95,7 +95,11 @@ class Engineer extends Component {
                             {" "}
                             <li className="breadcrumb-item">
                               <a href="Shipmentdata">Shipment status</a>
+                              <li className="breadcrumb-item">
+                              <a href="PC_Shipment">Inventory Control</a>
                             </li>
+                            </li>
+                            
                           </div>
                         </div>
                       </div>

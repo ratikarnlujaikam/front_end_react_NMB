@@ -761,7 +761,14 @@ MISSING_PART_GETCOMPONENT: `api/missing_part/component`,
 MISSING_PART_GETLINE: `api/missing_part/line`,
 
 // DOWNRIME_IMPORT_URL 
-IMPORTMENT_DOWNTIME_PART_URL: `api/importment_downtime/`
+IMPORTMENT_DOWNTIME_PART_URL: `api/importment_downtime/`,
+
+//PC check inventory
+MODELPC_URL : `api/pc_inventory/Model`,
+LOCATIONPC_URL : `api/pc_inventory/Location`,
+SUMMARYPC_URL : `api/pc_inventory/Summary`,
+SUMMARYPCDETAIL_URL : `api/pc_inventory/Summarydetail`,
+STATUSPC_URL : `api/pc_inventory/Status`,
 };
 
 export const key = {
