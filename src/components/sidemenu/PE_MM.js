@@ -65,7 +65,7 @@ class PE_MM extends Component {
                         </div>
                         <div className="card-body">
                           <li className="breadcrumb-item">
-                        <a href="/Missing_part_daily">Not Missing part </a>
+                        <a href="/Missing_part_daily">Part catch up miss </a>
      
                       </li>
                         </div>

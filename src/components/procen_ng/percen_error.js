@@ -41,6 +41,7 @@ class percen_ng extends Component {
       rawData: [],
 
       Raw_Dat: [],
+      Raw_Dat1: [],
       yAxisIndex: [],
 
       startDate: moment().format("yyyy-MM-DD"), //moment().add("days", -6).format("yyyy-MM-DD"),
@@ -73,7 +74,7 @@ class percen_ng extends Component {
       const currentDate = new Date().toISOString().split("T")[0];
       this.setState({ startDate: currentDate });
     });
-   await this.doGetDataReport()
+    await this.doGetDataReport();
   };
   doGetDataReport = async () => {
     try {
@@ -91,9 +92,19 @@ class percen_ng extends Component {
       for (let i = 1; i < rawData.length; i++) {
         rawData[0].push(...rawData[i]);
       }
+      console.log(rawData);
+
+      let flattenedData = rawData.flat();  // This will make it a single array if it's nested
+
+      let lineNGData = flattenedData.map(row => ({
+        'Line Number': 'L' + String(row.Line),  // Changes column name to 'Line Number'
+        '%Cho-ko-tei': String(row.NG)              // Changes column name to 'Non-Good'
+      }));
+
 
       this.setState({
         Raw_Dat: rawData[0],
+        Raw_Dat1: lineNGData,
         report: result.data.result,
         rawData,
         result_1Array,
@@ -158,9 +169,7 @@ class percen_ng extends Component {
     });
   };
 
-
   render() {
-    
     const { data } = this.props;
 
     const filterResultByLine = (line, result_1Array) => {
@@ -184,19 +193,19 @@ class percen_ng extends Component {
           "Total NG": 0,
         };
       }
-  // acc.Process += `
-  // <span style="color: black; font-weight: bold;">
-  //   ${curr.Process ? curr.Process.padEnd(20) : "0".padEnd(20)}
-  
-  // </span>
+      // acc.Process += `
+      // <span style="color: black; font-weight: bold;">
+      //   ${curr.Process ? curr.Process.padEnd(20) : "0".padEnd(20)}
 
-  // acc.Process += `
-  // <a href="/Auto_machine_by_process?process=${encodeURIComponent(curr.Process)}&line=${encodeURIComponent(curr.Line)}&startDate=${encodeURIComponent(this.state.startDate)}&to_link=${encodeURIComponent("ok")}">
-  //   <span style="color: bule; font-weight: bold;">
-  //     ${curr.Process ? curr.Process.padEnd(20) : "0".padEnd(20)}
-  //   </span>
+      // </span>
 
-  // </a>
+      // acc.Process += `
+      // <a href="/Auto_machine_by_process?process=${encodeURIComponent(curr.Process)}&line=${encodeURIComponent(curr.Line)}&startDate=${encodeURIComponent(this.state.startDate)}&to_link=${encodeURIComponent("ok")}">
+      //   <span style="color: bule; font-weight: bold;">
+      //     ${curr.Process ? curr.Process.padEnd(20) : "0".padEnd(20)}
+      //   </span>
+
+      // </a>
 
       const aggregatedValues = sortedResults.reduce(
         (acc, curr) => {
@@ -207,8 +216,12 @@ class percen_ng extends Component {
             acc.Total += `<span style="color: red; font-weight: bold;">${curr["Error"]}</span>`;
           }
 
-  acc.Process += `
-  <a href="/Auto_machine_by_process?process=${encodeURIComponent(curr.Process)}&line=${encodeURIComponent(curr.Line)}&startDate=${encodeURIComponent(this.state.startDate)}&to_link=${encodeURIComponent("ok")}">
+          acc.Process += `
+  <a href="/Auto_machine_by_process?process=${encodeURIComponent(
+    curr.Process
+  )}&line=${encodeURIComponent(curr.Line)}&startDate=${encodeURIComponent(
+            this.state.startDate
+          )}&to_link=${encodeURIComponent("ok")}">
     <span style="color: bule; font-weight: bold;">
       ${curr.Process ? curr.Process.padEnd(20) : "0".padEnd(20)}
     </span>
@@ -288,7 +301,6 @@ class percen_ng extends Component {
                   <label>By Daily Select From &nbsp;</label>
                   <input
                     value={this.state.startDate}
-
                     onChange={(e) => {
                       this.setState({ startDate: e.target.value });
                     }}
@@ -338,8 +350,21 @@ class percen_ng extends Component {
                   Submit
                 </button>
               </div>
+              <div className="col-md-1">
+                <CSVLink data={this.state.Raw_Dat1} filename={"report.csv"}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    style={{ marginTop: 30 }}
+                  >
+                    Download
+                  </button>
+                </CSVLink>
+              </div>
             </div>
+            
           </div>
+          
         </div>
 
         <div class="container-fluid">
@@ -386,11 +411,16 @@ class percen_ng extends Component {
                               <button
                                 className="btn btn-warning text-center"
                                 style={{
-                                  backgroundColor: item.NG === null ? "#555555" : item.NG >3 ? "red" : "green",
-                                    color: "white",
-                                    padding: "10px",
-                                    margin: "8px",
-                                    width: "100px", // Set a fixed width for the button
+                                  backgroundColor:
+                                    item.NG === null
+                                      ? "#555555"
+                                      : item.NG > 3
+                                      ? "red"
+                                      : "green",
+                                  color: "white",
+                                  padding: "10px",
+                                  margin: "8px",
+                                  width: "100px", // Set a fixed width for the button
                                 }}
                                 onClick={() => {
                                   const processItem = filterResultByLine(
@@ -517,11 +547,16 @@ class percen_ng extends Component {
                               <button
                                 className="btn btn-warning text-center"
                                 style={{
-                                  backgroundColor: item.NG === null ? "#555555" : item.NG >3 ? "red" : "green",
-                                    color: "white",
-                                    padding: "10px",
-                                    margin: "8px",
-                                    width: "100px", // Set a fixed width for the button
+                                  backgroundColor:
+                                    item.NG === null
+                                      ? "#555555"
+                                      : item.NG > 3
+                                      ? "red"
+                                      : "green",
+                                  color: "white",
+                                  padding: "10px",
+                                  margin: "8px",
+                                  width: "100px", // Set a fixed width for the button
                                 }}
                                 onClick={() => {
                                   const processItem = filterResultByLine(
@@ -639,11 +674,16 @@ class percen_ng extends Component {
                               <button
                                 className="btn btn-warning text-center"
                                 style={{
-                                  backgroundColor: item.NG === null ? "#555555" : item.NG >3 ? "red" : "green",
-                                    color: "white",
-                                    padding: "10px",
-                                    margin: "8px",
-                                    width: "100px", // Set a fixed width for the button
+                                  backgroundColor:
+                                    item.NG === null
+                                      ? "#555555"
+                                      : item.NG > 3
+                                      ? "red"
+                                      : "green",
+                                  color: "white",
+                                  padding: "10px",
+                                  margin: "8px",
+                                  width: "100px", // Set a fixed width for the button
                                 }}
                                 onClick={() => {
                                   const processItem = filterResultByLine(
@@ -761,11 +801,16 @@ class percen_ng extends Component {
                               <button
                                 className="btn btn-warning text-center"
                                 style={{
-                                  backgroundColor: item.NG === null ? "#555555" : item.NG >3 ? "red" : "green",
-                                    color: "white",
-                                    padding: "10px",
-                                    margin: "8px",
-                                    width: "100px", // Set a fixed width for the button
+                                  backgroundColor:
+                                    item.NG === null
+                                      ? "#555555"
+                                      : item.NG > 3
+                                      ? "red"
+                                      : "green",
+                                  color: "white",
+                                  padding: "10px",
+                                  margin: "8px",
+                                  width: "100px", // Set a fixed width for the button
                                 }}
                                 onClick={() => {
                                   const processItem = filterResultByLine(

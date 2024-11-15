@@ -139,7 +139,104 @@ class Master_ml extends Component {
       }
     }
   };
-  
+  handleUpdateClick = async (id, updatedItem) => {
+    try {
+      // Show a confirmation dialog using Swal
+      const confirmResult = await Swal.fire({
+        title: "Are you sure?",
+        text: "You are about to update the data.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      });
+
+      // If the user clicks "Yes", proceed with the update
+      if (confirmResult.isConfirmed) {
+        console.log("id", id);
+        const empNumber = this.state.empNumber;
+
+        // Make a GET request to retrieve the update URL
+        const updateUrl = await httpClient.get(
+          server.UPDATE_Master_URL +
+            "/" +
+            id +
+            "/" +
+            updatedItem.Fullname +
+            "/" +
+            updatedItem.Model +
+            "/" +
+            updatedItem.Parameter +
+            "/" +
+            updatedItem.LSL +
+            "/" +
+            updatedItem.CL +
+            "/" +
+            updatedItem.USL +
+            "/" +
+            updatedItem.Part +
+            "/" +
+            updatedItem.Machine +
+            "/" +
+            empNumber
+        );
+        console.log("updateUrl", updateUrl);
+
+        // Extract the URL from the config property
+        const url = updateUrl.config.url;
+
+        // Make a PUT request to update the data
+        const putResponse = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedItem),
+        });
+
+        // Retrieve the old values from the report state
+        const oldValues = this.state.report.find((item) => item.id === id);
+
+        // Construct a message with the old and new values
+
+        const modelValue = updatedItem.Model;
+        console.log("Model:", modelValue);
+
+        console.log("updateUrl", updateUrl);
+        // Log the response from the server
+        console.log("putResponse", putResponse);
+
+        // Show the update message in Swal
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "After the update is complete",
+          customClass: {
+            container: "custom-swal-container",
+          },
+        });
+
+        // Optionally, you can update the UI to reflect the changes
+        // For example, you can update the state or trigger a data refresh
+        this.doGetDataReport();
+      }
+    } catch (error) {
+      // Log any errors that occur during the update process
+      console.error("Error:", error);
+      // Optionally, provide user feedback or log errors more systematically
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred during the update.",
+        customClass: {
+          container: "custom-swal-container",
+        },
+      });
+    }
+    console.log("updatedItem", updatedItem);
+  };
+
   handleinsertClick = async (parameterNo, updatedItem) => {
     try {
       const confirmResult = await Swal.fire({

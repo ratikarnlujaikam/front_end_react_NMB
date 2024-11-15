@@ -300,6 +300,7 @@ class PC_shpiment extends Component {
             <td align="Center">{item["Item_No"]}</td>
             <td align="Center">{item["Item_Name"]}</td>
             <td align="Center">{item["Temp_DO"]}</td>
+            <td align="Center">{item["invoice_id"]}</td>
             <td align="Center">{item["WH"]}</td>
             <td align="Center">{item["LOC"]}</td>
             <td align="Center">{item["Vendor"]}</td>
@@ -392,7 +393,7 @@ class PC_shpiment extends Component {
                       <a href="/Home">Home</a>
                     </li>
                     <li className="breadcrumb-item active">
-                    Inventory  Control
+                    Inventory Shipment Control
                     </li>
                   </ol>
                 </div>
@@ -429,7 +430,7 @@ class PC_shpiment extends Component {
   }}
   >
     <FormControlLabel value="WIP" control={<Radio />} label="WIP" />
-    <FormControlLabel value="Shipment" control={<Radio />} label="Shipment" />
+    <FormControlLabel value="Shipment" control={<Radio />} label="Finish good" />
   </RadioGroup>
 </FormControl> 
 
@@ -683,6 +684,7 @@ class PC_shpiment extends Component {
                           <th width="50">Item_No</th>
                           <th width="50">Item_Name</th>
                           <th width="50">Temp_DO</th>
+                          <th width="50">Invoice_No</th>
                           <th width="50">WH</th>
                           <th width="50">LOC</th>
                           <th width="50">Vendor</th>

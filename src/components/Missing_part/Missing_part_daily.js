@@ -324,14 +324,14 @@ renderReport() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1>Missing component part</h1>
+                  <h1>Part catch up miss</h1>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
                     <li className="breadcrumb-item">
                       <a href="/Home">Home</a>
                     </li>
-                    <li className="breadcrumb-item active">Missing component part</li>
+                    <li className="breadcrumb-item active">Part catch up miss</li>
                   </ol>
                 </div>
               </div>

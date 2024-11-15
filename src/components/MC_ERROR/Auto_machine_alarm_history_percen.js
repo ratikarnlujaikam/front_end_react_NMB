@@ -165,38 +165,9 @@ class Auto_machine_alarm_history extends Component {
   
     // Define y-axis configurations
     let yaxisConfig = [];
-    for (let i = 0; i < numColumns; i++) {
-      yaxisConfig.push({
-        seriesName: seriesName,
-        min: 0,
-        axisTicks: {},
-        axisBorder: {
-          show: i === 0,
-          color: i === 0 ? "#d62728" : "#3399ff",
-        },
-        labels: {
-          show: i === 0,
-          style: {
-            colors: i === 0 ? "#d62728" : "#3399ff",
-          },
-          formatter: function (val) {
-            return Number(val).toFixed(2) + "%";
-          },
-        },
-        title: {
-          show: i === 0,
-          text: "Percen%",
-          style: {
-            color: i === 0 ? "#d62728" : "#3399ff",
-          },
-        },
-        tooltip: {
-          show: i === 0,
-          enabled: true,
-        },
-        yAxisIndex: i,
-      });
-    }
+  
+
+
   
     const month = this.state.startDate.split("-")[1];
     const year = this.state.startDate.split("-")[0];

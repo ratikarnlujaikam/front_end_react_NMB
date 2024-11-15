@@ -1188,9 +1188,9 @@ class Product_hold_control extends Component {
                       <label>
                         <input
                           type="radio"
-                          value="Hold_Date"
+                          value="Hold_Date_Mfg"
                           checked={
-                            this.state.selectedDateOption === "Hold_Date"
+                            this.state.selectedDateOption === "Hold_Date_Mfg"
                           }
                           onChange={this.handleDateOptionChange}
                         />

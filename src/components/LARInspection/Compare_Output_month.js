@@ -21,7 +21,9 @@ class Monthly_LAR_report_all_Model extends Component {
 
     //set state
     this.state = {
-      year: [],
+      Lines: [],
+      selectedOption: "line",
+      selectedDesign:[],
       Month: [],
       process: [],
       report: [],
@@ -43,7 +45,7 @@ class Monthly_LAR_report_all_Model extends Component {
 
       startDate: moment().format("yyyy"), //moment().add("days", -6).format("yyyy-MM-DD"),
       finishDate: moment().format("yyyy-MM-DD"), //moment().format("yyyy-MM-DD"),
-      listyear: [],
+      listLines: [],
       listMonth: [],
       listModel: [],
 
@@ -61,13 +63,9 @@ class Monthly_LAR_report_all_Model extends Component {
     };
   }
   componentDidMount = async () => {
-    await this.getyear();
+    await this.getline();
     this.setState({ countdownEnabled: false });
-    // const savedStartDate = localStorage.getItem("startDate");
 
-    // if (savedStartDate) {
-    //   this.setState({ startDate: savedStartDate });
-    // }
 
     const { location } = this.props;
     const { state } = location;
@@ -118,10 +116,12 @@ class Monthly_LAR_report_all_Model extends Component {
       const result = await httpClient.get(
         server.Compare_Output_month_URL +
           "/" +
-          this.state.year +
+          this.state.Lines +
           "/" +
           this.state.startDate
       );
+      console.log("Line:", this.state.Lines);
+      console.log("StartDate:", this.state.startDate);
       console.log(result);
       if (
         !result.data ||
@@ -399,7 +399,403 @@ class Monthly_LAR_report_all_Model extends Component {
           yAxisIndex: 0, // Set the yAxisIndex to 0 for the left side
         },
         title: {
-          text: `%NG monthly's Summary Line ${this.state.year} year  ${this.state.startDate}`,
+          text: `%NG monthly's Summary Line ${this.state.Lines} year  ${this.state.startDate}`,
+          align: "center",
+          offsetX: 0,
+        },
+        xaxis: {
+          categories: xAxis,
+        },
+        yaxis: yaxisConfig,
+        colors: [
+          "#993366",
+          "#ff7f0e",
+          "#2ca02c",
+
+          "#9467bd",
+          "#c49c94",
+          "#e377c2",
+          "#7f7f7f",
+          "#bcbd22",
+          "#17becf",
+          "#aec7e8",
+          "#ffbb78",
+          "#1f77b4",
+          "#c5b0d5",
+          "#f7b6d2",
+          "#c7c7c7",
+
+          "#9edae5",
+          "#d62728",
+          "#ff6600",
+          "#663300",
+          "#ff66cc",
+          "#666666",
+          "#cccc00",
+          "#00ccff",
+          "#ff3300",
+          "#66ff66",
+          "#990000",
+          "#996699",
+          "#996633",
+          "#ff99cc",
+          "#999999",
+          "#ffff00",
+          "#0099ff",
+          "#dbdb8d",
+        ],
+        fill: {
+          opacity: 1,
+        },
+        tooltip: {
+          fixed: {
+            enabled: false,
+          },
+          followCursor: true,
+          offsetY: 20,
+          offsetX: 30,
+        },
+        legend: {
+          position: "bottom",
+          horizontalAlign: "center",
+          offsetY: 10,
+          markers: {
+            width: 12,
+            height: 12,
+            radius: 4,
+          },
+          itemMargin: {
+            horizontal: 10,
+            vertical: 5,
+          },
+        },
+        stroke: {
+          width: 5,
+          curve: "smooth",
+        },
+        markers: {
+          size: 5,
+          strokeColors: "#7f7f7f",
+          strokeWidth: 2,
+          hover: {
+            size: 7,
+          },
+        },
+        yaxis: yaxisConfig,
+        className: "apexcharts-bar-area",
+      };
+
+      //console.log(options);
+
+      await this.setState({
+        options: options,
+
+        seriesY: sortedData,
+      });
+      this.setState({
+        options: {
+          ...this.state.options,
+          chart: {
+            ...this.state.options.chart,
+            type: "bar", // Change the type to bar or any other supported type
+          },
+        },
+      });
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle the error, display an error message, or log it as needed
+    }
+  };
+  doGetDataReport_Design = async () => {
+    try {
+      const result = await httpClient.get(
+        server.Compare_Output_month_Design_URL +
+          "/" +
+          this.state.selectedDesign +
+          "/" +
+          this.state.startDate
+      );
+      console.log("Line:", this.state.Lines);
+      console.log("StartDate:", this.state.startDate);
+      console.log(result);
+      if (
+        !result.data ||
+        !result.data.resultGraph ||
+        result.data.resultGraph.length === 0
+      ) {
+        console.log("No data available");
+
+        // Show SweetAlert
+        swal({
+          title: "No Running",
+          text: "There is no data available for the selected criteria.",
+          icon: "info",
+          button: "OK",
+        }).then(this.handleSweetAlertConfirm); // Attach the callback to "OK" button
+
+        this.setState({ noData: true }); // Set a flag for no data
+        return;
+      }
+
+      let xAxis = [];
+
+      for (let index = 0; index < result.data.resultGraph.length; index++) {
+        const item = result.data.resultGraph[index];
+        await xAxis.push(item.Month);
+      }
+
+      let PivotTable = result.data.PivotTable;
+      //console.log(PivotTable);
+
+      this.setState({
+        report: result.data.result,
+        xAxis,
+        isDisable: false,
+      });
+
+      let seriesData = [];
+
+      for (let i = 0; i < PivotTable.length; i++) {
+        const series = {
+          name: PivotTable[i].name,
+          type:
+            PivotTable[i].name === "Actual_Input" ||
+            PivotTable[i].name === "Total_NG"
+              ? "scale"
+              : PivotTable[i].name === "NG_Percentage"
+              ? "line"
+              : "column",
+          data: PivotTable[i].data,
+        };
+        seriesData.push(series);
+      }
+
+      // Now seriesData contains objects with modified types
+      //console.log(seriesData);
+      let columnSeries = seriesData.filter(
+        (series) => series.type === "column"
+      );
+      let lineSeries = seriesData.filter((series) => series.type === "line");
+
+      let mergedSeries = columnSeries.concat(lineSeries);
+      console.log(mergedSeries);
+
+      // Now columnSeries contains objects with type 'column' and lineSeries contains objects with type 'line'
+      //console.log(columnSeries);
+      //console.log(lineSeries);
+
+      const sortedData = seriesData.sort((a, b) => {
+        // Items with name "Actual_Input" or "Total_NG" should be moved to the end
+        if (
+          (a.name === "Actual_Input" || a.name === "Total_NG") &&
+          !(b.name === "Actual_Input" || b.name === "Total_NG")
+        ) {
+          return 1;
+        } else if (
+          !(a.name === "Actual_Input" || a.name === "Total_NG") &&
+          (b.name === "Actual_Input" || b.name === "Total_NG")
+        ) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+
+      //console.log(sortedData);
+
+      let numColumns = 0;
+      let numLines = 0;
+
+      // Loop through the sortedData array
+      for (const item of sortedData) {
+        // Check if the type is 'column'
+        if (item.type === "column") {
+          numColumns++;
+        }
+        // Check if the type is 'line'
+        if (item.type === "line") {
+          numLines++;
+        }
+      }
+
+      // Sum the counts of columns and lines
+      let totalColumnsAndLines = numColumns + numLines;
+
+      console.log("Total columns and lines:", totalColumnsAndLines);
+
+      const mappedSeriesNames = sortedData.map((item) => item.name);
+
+      console.log(mappedSeriesNames);
+
+      // Assuming your array is named dataSeries
+      const maxValues = sortedData.map((series) => Math.max(...series.data));
+
+      // The maximum value among all data arrays
+      const globalMaxValue = Math.max(...maxValues);
+
+      //console.log(globalMaxValue);
+
+      const X_left = Math.max(...maxValues) / 2;
+      //console.log(X_left);
+
+      // Assuming mappedSeriesNames[0] is the series name you want to use
+      const seriesName = mappedSeriesNames[0];
+      const line_percen = mappedSeriesNames[mappedSeriesNames.length - 1];
+      console.log(line_percen); // ผลลัพธ์คือ "NG_Percentage"
+
+      console.log(seriesName);
+
+      let yaxisConfig = [];
+
+      // Loop for each column
+      for (let i = 0; i < totalColumnsAndLines; i++) {
+        let config = {
+          seriesName: seriesName,
+          min: 0,
+
+          axisTicks: {},
+          axisBorder: {
+            show: i === 0,
+            color: i === 0 ? "#d62728" : "#3399ff",
+          },
+          labels: {
+            show: i === 0,
+            style: {
+              colors: i === 0 ? "#d62728" : "#3399ff",
+            },
+            formatter: function (val) {
+              return Number(val).toFixed(2) + "%";
+            },
+            yAxisIndex: 0, // Set the yAxisIndex to 0 for the left side
+          },
+          title: {
+            show: i === 0,
+            text: "Percentage",
+            style: {
+              color: i === 0 ? "#d62728" : "#3399ff",
+            },
+          },
+          tooltip: {
+            show: true,
+            enabled: true,
+          },
+          show: i === 0,
+          yAxisIndex: 0, // Set the yAxisIndex to 0 for the left side
+          type: i === 0 ? "line" : "bar", // Set type to line for the first series, bar for others
+          dataLabels: {
+            enabled: true,
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+              fontSize: "13px",
+              color: "#000000", // Set the color to black for yAxisIndex 0
+            },
+            formatter: function (val) {
+              return Number(val).toFixed(2) + "%";
+            },
+            yAxisIndex: 0, // Set the yAxisIndex to 0 for the left side
+          },
+          line: {
+            show: i === 0, // Set show property of line to false for bars
+          },
+        };
+
+        yaxisConfig.push(config);
+      }
+
+      yaxisConfig.push(
+        {
+          seriesName: "Income",
+          min: 0,
+          max: globalMaxValue,
+          opposite: false,
+          axisTicks: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+            color: "#1f77b4",
+          },
+          labels: {
+            show: false,
+            style: {
+              colors: "#1f77b4",
+            },
+          },
+          yAxisIndex: 1,
+          grouping: true,
+          type: "line",
+          // Apply dataLabels configuration for yAxisIndex 1
+          dataLabels: {
+            enabled: false, // Set to false to hide dataLabels
+          },
+        },
+        {
+          seriesName: "Output",
+          min: 0,
+          max: globalMaxValue,
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            style: {
+              colors: "#000000",
+            },
+          },
+          yAxisIndex: 1,
+          grouping: true,
+          type: "bar",
+          // Apply dataLabels configuration for yAxisIndex 1
+          dataLabels: {
+            enabled: false, // Set to false to hide dataLabels
+          },
+        }
+      );
+
+      // Options object
+      let options = {
+        chart: {
+          height: 350,
+          type: "line",
+          stacked: true,
+          marginLeft: 0,
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: "60%",
+            endingShape: "rounded",
+            borderWidth: 1,
+            borderColor: "#000000",
+            dataLabels: {
+              position: "center", // Change this line to "center" or "insideEnd"
+              offsetY: 1,
+            },
+          },
+        },
+        tooltip: {
+          fixed: {
+            enabled: false,
+          },
+          followCursor: false,
+        },
+        dataLabels: {
+          enabled: true,
+          offsetX: 0,
+          offsetY: 0,
+          style: {
+            fontSize: "13px",
+            color: "#000000", // Set the color to black
+          },
+          formatter: function (val) {
+            return Number(val).toFixed(2) + "%";
+          },
+          yAxisIndex: 0, // Set the yAxisIndex to 0 for the left side
+        },
+        title: {
+          text: `%NG monthly's Summary Line ${this.state.Lines} year  ${this.state.startDate}`,
           align: "center",
           offsetX: 0,
         },
@@ -506,7 +902,6 @@ class Monthly_LAR_report_all_Model extends Component {
       // Handle the error, display an error message, or log it as needed
     }
   };
-
   getMaxValue = (options) => {
     let max = -Infinity;
     let maxOption = null;
@@ -522,12 +917,12 @@ class Monthly_LAR_report_all_Model extends Component {
     return maxOption;
   };
 
-  getyear = async () => {
+  getline = async () => {
     const array = await httpClient.get(server.Compare_Output_month_Line_URL);
     const options = array.data.result.map((d) => ({
       label: d.year,
     }));
-    this.setState({ listyear: options });
+    this.setState({ listLines: options });
   };
 
   getprocess = async () => {
@@ -581,9 +976,7 @@ class Monthly_LAR_report_all_Model extends Component {
     this.setState({ startDate: event.target.value });
   };
   render() {
-    const startYear = 2023;
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
+
     return (
       <div className="content-wrapper">
         <div className="content" style={{ paddingTop: 10 }}>
@@ -630,49 +1023,144 @@ class Monthly_LAR_report_all_Model extends Component {
 
                   <div className="card-body">
                     <div className="row">
+                      <div className="col-md-1">
+                        <label>Select Option</label>
+                        <div>
+                          <input
+                            type="radio"
+                            value="line"
+                            checked={this.state.selectedOption === "line"}
+                            onChange={(e) =>
+                              this.setState({ selectedOption: e.target.value })
+                            }
+                          />
+                          <label>Line</label>
+                        </div>
+                        <div>
+                          <input
+                            type="radio"
+                            value="design"
+                            checked={this.state.selectedOption === "design"}
+                            onChange={(e) =>
+                              this.setState({ selectedOption: e.target.value })
+                            }
+                          />
+                          <label>Design</label>
+                        </div>
+                      </div>
+
+                      {/* Dropdown สำหรับ Line */}
+                      {this.state.selectedOption === "line" && (
+                        <div className="col-md-2">
+                          <div className="form-group">
+                            <label>Line&Model</label>
+                            <Select
+                              options={this.state.listLines}
+                              onChange={async (e) => {
+                                await this.setState({ Lines: e.label });
+                              }}
+                              placeholder="Select Line&Model"
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Dropdown สำหรับ Design */}
+
+                      {this.state.selectedOption === "design" && (
+                        <div className="col-md-2">
+                          <div className="form-group">
+                            <label>Design</label>
+                            <Select
+                              options={[
+                                {
+                                  value: "3.5 inch FCC",
+                                  label: "3.5 inch FCC",
+                                },
+                                { value: "2.5 inch", label: "2.5 inch" },
+                                { value: "3.5 inch SP", label: "3.5 inch SP" },
+                              ]}
+                              onChange={async (e) => {
+                                await this.setState({
+                                  selectedDesign: e.label,
+                                });
+                              }}
+                              placeholder="Select Design"
+                            />
+                          </div>
+                        </div>
+                      )}
                       <div className="col-md-2">
                         <div className="form-group">
-                          <label>Line</label>
+                          <label>Select Year</label>
                           <Select
-                            options={this.state.listyear}
+                            options={Array.from({ length: 3 }, (_, i) => {
+                              const year = new Date().getFullYear() - i;
+                              return {
+                                value: year.toString(),
+                                label: year.toString(),
+                              };
+                            })}
                             onChange={async (e) => {
-                              await this.setState({ year: e.label });
+                              await this.setState({ startDate: e.label });
                             }}
-                            placeholder="Select Line"
+                            placeholder="Select Year"
                           />
                         </div>
                       </div>
 
-                      <div className="form-group">
-        <label>By Year Select From &nbsp;</label>
-        <div className="custom-year-selector">
-          <select
-            value={this.state.startDate}
-            onChange={this.handleYearChange}
-            className="form-control"
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-                      <div className="col-md-2">
+                      <div className="col-md-3">
                         <button
                           disabled={this.state.isDisable}
                           onClick={async (e) => {
+                            if (this.state.selectedOption === "line") {
+                              if (!this.state.Lines || this.state.Lines.length === 0) {
+                                  Swal.fire({
+                                      icon: "warning",
+                                      title: "Missing Information",
+                                      text: "Please select at least one line before fetching data.",
+                                  });
+                                  return; // ออกจากฟังก์ชันหากไม่มีการเลือก Line
+                              }
+                          } else if (this.state.selectedOption === "design") {
+                              if (!this.state.selectedDesign || this.state.selectedDesign.length === 0) {
+                                  Swal.fire({
+                                      icon: "warning",
+                                      title: "Missing Information",
+                                      text: "Please select at least one design before fetching data.",
+                                  });
+                                  return; // ออกจากฟังก์ชันหากไม่มีการเลือก Design
+                              }
+                          }
+                          
+                            
+                            // ตรวจสอบว่ามีการเลือก Start Date หรือไม่
+                            if (!this.state.startDate) {
+                              Swal.fire({
+                                icon: "warning",
+                                title: "Missing Start Date",
+                                text: "Please select a start date before fetching data.",
+                              });
+                              return; // ออกจากฟังก์ชันหากไม่มีการเลือก Start Date
+                            }
                             this.setState({ isDisable: true });
-                            if (!this.state.year.length) {
-                              // ถ้าค่า this.state.Line.length เป็น 0 ให้แสดงข้อความแจ้งเตือน
+
+                            // ตรวจสอบว่ามีการเลือก Line หรือ Design หรือไม่
+                            if (
+                              (this.state.selectedOption === "line" &&
+                                !this.state.Lines) ||
+                              (this.state.selectedOption === "design" &&
+                                !this.state.selectedDesign)
+                            ) {
                               Swal.fire({
                                 icon: "error",
                                 title: "Missing Selection",
-                                text: "Please select Line",
+                                text: `Please select ${
+                                  this.state.selectedOption === "line"
+                                    ? "Line"
+                                    : "Design"
+                                }`,
                               }).then(() => {
-                                // รีเฟรชหน้าใหม่
                                 window.location.reload();
                               });
                             } else {
@@ -683,10 +1171,21 @@ class Monthly_LAR_report_all_Model extends Component {
                                 allowOutsideClick: false,
                                 didOpen: async () => {
                                   Swal.showLoading();
-                                  await this.doGetDataReport();
+
+                                  // ตรวจสอบว่าเลือก Line หรือ Design และเรียกฟังก์ชันที่เหมาะสม
+                                  if (this.state.selectedOption === "line") {
+                                    await this.doGetDataReport();
+                                  } else if (
+                                    this.state.selectedOption === "design"
+                                  ) {
+                                    await this.doGetDataReport_Design();
+                                  }
+
                                   Swal.close();
                                 },
-                              }).then(() => {});
+                              }).then(() => {
+                                // Rest of your code...
+                              });
                             }
                           }}
                           type="submit"
