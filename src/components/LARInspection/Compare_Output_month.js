@@ -1110,91 +1110,92 @@ class Monthly_LAR_report_all_Model extends Component {
                       </div>
 
                       <div className="col-md-3">
-                        <button
-                          disabled={this.state.isDisable}
-                          onClick={async (e) => {
-                            if (this.state.selectedOption === "line") {
-                              if (!this.state.Lines || this.state.Lines.length === 0) {
-                                  Swal.fire({
-                                      icon: "warning",
-                                      title: "Missing Information",
-                                      text: "Please select at least one line before fetching data.",
-                                  });
-                                  return; // ออกจากฟังก์ชันหากไม่มีการเลือก Line
-                              }
-                          } else if (this.state.selectedOption === "design") {
-                              if (!this.state.selectedDesign || this.state.selectedDesign.length === 0) {
-                                  Swal.fire({
-                                      icon: "warning",
-                                      title: "Missing Information",
-                                      text: "Please select at least one design before fetching data.",
-                                  });
-                                  return; // ออกจากฟังก์ชันหากไม่มีการเลือก Design
-                              }
-                          }
-                          
-                            
-                            // ตรวจสอบว่ามีการเลือก Start Date หรือไม่
-                            if (!this.state.startDate) {
-                              Swal.fire({
-                                icon: "warning",
-                                title: "Missing Start Date",
-                                text: "Please select a start date before fetching data.",
-                              });
-                              return; // ออกจากฟังก์ชันหากไม่มีการเลือก Start Date
-                            }
-                            this.setState({ isDisable: true });
+  <button
+    disabled={this.state.isDisable}
+    onClick={async (e) => {
+      try {
+        if (this.state.selectedOption === "line") {
+          if (!this.state.Lines || this.state.Lines.length === 0) {
+            Swal.fire({
+              icon: "warning",
+              title: "Missing Information",
+              text: "Please select at least one line before fetching data.",
+            });
+            return;
+          }
+        } else if (this.state.selectedOption === "design") {
+          if (!this.state.selectedDesign || this.state.selectedDesign.length === 0) {
+            Swal.fire({
+              icon: "warning",
+              title: "Missing Information",
+              text: "Please select at least one design before fetching data.",
+            });
+            return;
+          }
+        }
 
-                            // ตรวจสอบว่ามีการเลือก Line หรือ Design หรือไม่
-                            if (
-                              (this.state.selectedOption === "line" &&
-                                !this.state.Lines) ||
-                              (this.state.selectedOption === "design" &&
-                                !this.state.selectedDesign)
-                            ) {
-                              Swal.fire({
-                                icon: "error",
-                                title: "Missing Selection",
-                                text: `Please select ${
-                                  this.state.selectedOption === "line"
-                                    ? "Line"
-                                    : "Design"
-                                }`,
-                              }).then(() => {
-                                window.location.reload();
-                              });
-                            } else {
-                              Swal.fire({
-                                icon: "info",
-                                title: "Loading Data",
-                                timer: 60000,
-                                allowOutsideClick: false,
-                                didOpen: async () => {
-                                  Swal.showLoading();
+        if (!this.state.startDate) {
+          Swal.fire({
+            icon: "warning",
+            title: "Missing Start Date",
+            text: "Please select a start date before fetching data.",
+          });
+          return;
+        }
 
-                                  // ตรวจสอบว่าเลือก Line หรือ Design และเรียกฟังก์ชันที่เหมาะสม
-                                  if (this.state.selectedOption === "line") {
-                                    await this.doGetDataReport();
-                                  } else if (
-                                    this.state.selectedOption === "design"
-                                  ) {
-                                    await this.doGetDataReport_Design();
-                                  }
+        this.setState({ isDisable: true });
 
-                                  Swal.close();
-                                },
-                              }).then(() => {
-                                // Rest of your code...
-                              });
-                            }
-                          }}
-                          type="submit"
-                          className="btn btn-primary"
-                          style={{ marginTop: 30 }}
-                        >
-                          Submit
-                        </button>
-                      </div>
+        if (
+          (this.state.selectedOption === "line" && !this.state.Lines) ||
+          (this.state.selectedOption === "design" && !this.state.selectedDesign)
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Missing Selection",
+            text: `Please select ${
+              this.state.selectedOption === "line" ? "Line" : "Design"
+            }`,
+          }).then(() => {
+            this.setState({ isDisable: false }); // Re-enable the button
+          });
+        } else {
+          Swal.fire({
+            icon: "info",
+            title: "Loading Data",
+            timer: 60000,
+            allowOutsideClick: false,
+            didOpen: async () => {
+              Swal.showLoading();
+
+              if (this.state.selectedOption === "line") {
+                await this.doGetDataReport();
+              } else if (this.state.selectedOption === "design") {
+                await this.doGetDataReport_Design();
+              }
+
+              Swal.close();
+            },
+          }).finally(() => {
+            this.setState({ isDisable: false }); // Re-enable the button after operation
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Something went wrong. Please try again.",
+        });
+        this.setState({ isDisable: false }); // Re-enable the button in case of error
+      }
+    }}
+    type="submit"
+    className="btn btn-primary"
+    style={{ marginTop: 30 }}
+  >
+    Submit
+  </button>
+</div>
+
                     </div>
                   </div>
                 </div>
