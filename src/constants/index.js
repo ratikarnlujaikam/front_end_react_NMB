@@ -42,9 +42,9 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE =
 
 
 
-export const apiUrl = "http://localhost:2010/"; //localhost port 2010
-export const Url = "http://localhost:3000/"; //Port frontend
-export const apiUrl_python = "http://192.168.101.120:2028/"; //deploy บางปะอิน 
+// export const apiUrl = "http://localhost:2010/"; //localhost port 2010
+// export const Url = "http://localhost:3000/"; //Port frontend
+// export const apiUrl_python = "http://192.168.101.120:2028/"; //deploy บางปะอิน 
 
 //SPD 
 // export const apiUrl = "http://192.168.101.120:2026/"; //deploy บางปะอิน 
@@ -52,9 +52,9 @@ export const apiUrl_python = "http://192.168.101.120:2028/"; //deploy บาง�
 // export const apiUrl_python = "http://192.168.101.120:2028/"; //deploy บางปะอิน 
 
 //nmb 
-// export const apiUrl = "http://10.120.122.28:2016/"; //deploy บางปะอิน 
-// export const Url = "http://10.120.122.28:2017/"; //deploy บางปะอิน 
-// export const apiUrl_python = "http://10.120.122.28:2012/"; //deploy บางปะอิน 
+export const apiUrl = "http://10.120.122.28:2016/"; //deploy บางปะอิน 
+export const Url = "http://10.120.122.28:2017/"; //deploy บางปะอิน 
+export const apiUrl_python = "http://10.120.122.28:2012/"; //deploy บางปะอิน 
 
 //Test
 // export const apiUrl = "http://10.120.122.28:51/"; //deploy บางปะอิน 
@@ -771,6 +771,17 @@ LOCATIONPC_URL : `api/pc_inventory/Location`,
 SUMMARYPC_URL : `api/pc_inventory/Summary`,
 SUMMARYPCDETAIL_URL : `api/pc_inventory/Summarydetail`,
 STATUSPC_URL : `api/pc_inventory/Status`,
+
+//DB Master
+DBMASTER_URL: `api/DBMaster/DBMaster`,
+
+//PC check inventory
+MODELPC_URL : `api/pc_inventory/Model`,
+LOCATIONPC_URL : `api/pc_inventory/Location`,
+SUMMARYPC_URL : `api/pc_inventory/Summary`,
+SUMMARYPCDETAIL_URL : `api/pc_inventory/Summarydetail`,
+STATUSPC_URL : `api/pc_inventory/Status`,
+MBAFG_URL : `api/pc_inventory/MBAFG`,
 };
 
 export const key = {

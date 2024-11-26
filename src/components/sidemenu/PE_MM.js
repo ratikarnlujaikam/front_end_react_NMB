@@ -89,7 +89,7 @@ class PE_MM extends Component {
                           <li className="breadcrumb-item">
                         <a href="/percen_error">Cho-ko-tei Dashboard Monitoring</a>
                           <li className="breadcrumb-item">
-                        <a href="/Dash_board_Downtime">Downtime Dashboard Monitoring</a>
+                        <a href="/Downtime_monitering">Downtime All Dashboard Monitoring</a>
                           <li className="breadcrumb-item">
                         <a href="/Importment_downtime_line">Break down downtime by pareto</a>
                   

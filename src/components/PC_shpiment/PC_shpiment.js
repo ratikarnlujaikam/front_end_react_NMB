@@ -60,7 +60,7 @@ class PC_shpiment extends Component {
     // await this.getModel();
     // await this.getLocation();
     await this.getStatus();
-    // await this.doGetDataReport1();    
+    await this.doGetDataReport2();    
     // await this.doGetDataReport3();
 
   };
@@ -229,6 +229,24 @@ class PC_shpiment extends Component {
       isDisable: false,
     });
   };
+  doGetDataReport2 = async () => {
+   
+    const result = await httpClient.get(
+      server.MBAFG_URL 
+    );
+    let rawData2 = result.data.listRawData2;
+    console.log(rawData2);
+    for (let i = 1; i < rawData2.length; i++) {
+      rawData2[0].push(...rawData2[i]);
+    }
+    this.setState({ Raw_Dat2: rawData2[0] });
+    console.log(this.state.Raw_Dat2);
+
+    this.setState({
+      report2: result.data.result,
+      isDisable: false,
+    });
+  };
   doGetDataReport3 = async () => {
     const modelLabel =
       this.state.Model.label === "**ALL**" ? "**ALL**" : this.state.Model.label;
@@ -284,6 +302,19 @@ class PC_shpiment extends Component {
   return this.state.report1.map((item, index) => (
     <tr key={index} align="center"> {/* ควรใช้ key ในการวนรอบ */}
       <td align="center">{item["Location"]}</td>
+      <td align="center">{(item.OK || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
+      <td align="center">{(item.HOLD || 0).toLocaleString()}</td> {/* ใช้ค่าเริ่มต้น */}
+      <td align="center">{(item.QTY || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
+    </tr>
+  ));
+}
+  };
+  renderreport2 = () => {
+    if (this.state.report2 != null && this.state.report2.length > 0) {
+  return this.state.report2.map((item, index) => (
+    <tr key={index} align="center"> {/* ควรใช้ key ในการวนรอบ */}
+      <td align="center">{item["Location"]}</td>
+      <td align="center">{(item.Lot_QA || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
       <td align="center">{(item.OK || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
       <td align="center">{(item.HOLD || 0).toLocaleString()}</td> {/* ใช้ค่าเริ่มต้น */}
       <td align="center">{(item.QTY || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
@@ -393,7 +424,7 @@ class PC_shpiment extends Component {
                       <a href="/Home">Home</a>
                     </li>
                     <li className="breadcrumb-item active">
-                    Inventory Shipment Control
+                    Inventory  Control
                     </li>
                   </ol>
                 </div>
@@ -404,6 +435,70 @@ class PC_shpiment extends Component {
 
         <div class="container-fluid">
           <div className="row">
+          <div className="col-12">
+              <div className="content" style={{ paddingTop: 5 }}>
+                <section className="content-header">
+                  <div className="container-fluid">
+                    <div className="row mb-1">
+                      <div className="col-sm-6">
+                        <h1>Finish good for Shipment</h1>
+                      </div>
+                      <div className="col-sm-6">
+                        <CSVLink
+                          data={this.state.Raw_Dat1}
+                          filename={"Summary_Inventory_Shipment.csv"}
+                        >
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            style={{ marginTop: 3 }}
+                          >
+                            Finish good for Shipment
+                          </button>
+                        </CSVLink>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div className="row mb-2">
+                <div className="col-sm-6">
+                  <div className="row"></div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-12">
+                  <div class="content">
+                    <div class="container-fluid">
+                      <div className="card card-primary">
+                        <div
+                          className="card-body table-responsive p-0"
+                          style={{ height: 400 }}
+                        >
+                          <table className="table  text-nowrap table-hover">
+                            <thead>
+                              <tr align="center">
+                                <th width="120">Location</th>
+                                <th width="120">Lot_QA</th>
+                                <th width="120">OK</th>
+                                <th width="120">HOLD</th>
+                                <th width="120">QTY</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody>{this.renderreport2()}</tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-4">
+                 
+                </div>
+              </div>
+            </div>
             <div className="col-12">
               
               <div className="card card-primary card-outline">
@@ -521,7 +616,7 @@ class PC_shpiment extends Component {
                           Swal.fire({
                             icon: "info",
                             title: "Loading Data",
-                            timer: 60000,
+                            timer: 360000,
                             allowOutsideClick: false,
                             didOpen: async () => {
                               Swal.showLoading();

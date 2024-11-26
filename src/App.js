@@ -149,6 +149,20 @@ import Importment_downtime_line from "./components/Importment_downtime/Improment
 import Importment_downtime_case_detail from "./components/Importment_downtime/Improment_downtime_casedetail"
 
 import PC_shpiment from "./components/PC_shpiment/PC_shpiment";
+import DB_master from "./components/procen_ng/DB_master"
+
+import Downtime_monitering from "./components/procen_ng/percen_Downtime_all";
+import Downtime_monitering_WR from "./components/procen_ng/percen_Downtime_WR";
+import Downtime_monitering_Fec2 from "./components/procen_ng/percen_Downtime_Fac2";
+import Downtime_monitering_Winding from "./components/procen_ng/percen_Downtime_Winding";
+import Downtime_monitering_Washing from "./components/procen_ng/percen_Downtime_Washing";
+import Downtime_Zone_magnet from "./components/procen_ng/percen_Downtime_Zone_magnet";
+import Downtime_Zone_co2 from "./components/procen_ng/percen_Downtime_Zone_co2";
+import Downtime_Zone_Layer from "./components/procen_ng/percen_Downtime_Zone_Layer";
+import Downtime_Zone_oven from "./components/procen_ng/percen_Downtime_Zone_oven";
+import Downtime_Zone_packing from "./components/procen_ng/percen_Downtime_Zone_Packing";
+import Downtime_Zone_QA from "./components/procen_ng/percen_Downtime_Zone_QA";
+import Downtime_Zone_Sorting from "./components/procen_ng/percen_Downtime_Zone_sorting";
 // import TargetPage from './TargetPage';
 
 const SecuredRoute = ({ component: Component, ...rest }) => (
@@ -462,6 +476,21 @@ export default class App extends Component {
               path="/Importment_downtime_case_detail"
               component={Importment_downtime_case_detail}
             />
+            
+<SecuredRoute path="/DB_master" component={DB_master} />  
+
+            <SecuredRoute path="/Downtime_monitering"  component={Downtime_monitering} />
+            <SecuredRoute path="/Downtime_monitering_WR"  component={Downtime_monitering_WR} />{" "}
+            <SecuredRoute path="/Downtime_monitering_Fec2" component={Downtime_monitering_Fec2}  />
+            <SecuredRoute path="/Downtime_monitering_Winding" component={Downtime_monitering_Winding} />
+            <SecuredRoute path="/Downtime_monitering_Washing" component={Downtime_monitering_Washing} />
+            <SecuredRoute path="/Downtime_Zone_magnet" component={Downtime_Zone_magnet} />
+            <SecuredRoute path="/Downtime_Zone_co2" component={Downtime_Zone_co2} />
+            <SecuredRoute path="/Downtime_Zone_Layer" component={Downtime_Zone_Layer} />
+            <SecuredRoute path="/Downtime_Zone_oven" component={Downtime_Zone_oven} />
+            <SecuredRoute path="/Downtime_Zone_packing" component={Downtime_Zone_packing} />
+            <SecuredRoute path="/Downtime_Zone_QA" component={Downtime_Zone_QA} />
+            <SecuredRoute path="/Downtime_Zone_Sorting" component={Downtime_Zone_Sorting} />
             <Route exact={true} path="/" component={this.redirectToLogin} />
             <Route exact={true} path="*" component={this.redirectToLogin} />
           </Switch>{" "}

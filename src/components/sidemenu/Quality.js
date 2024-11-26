@@ -206,6 +206,12 @@ class Quality extends Component {
                                         Trend Master judgement
                                         </a>
                             
+                                        <li className="breadcrumb-item">
+                                        <a href="/DB_master">
+                                        Master Dashboard Monitoring
+                                        </a>
+                            
+                                      </li>
                                       </li>
                            
               
