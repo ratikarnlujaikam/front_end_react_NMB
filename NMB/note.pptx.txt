@@ -1,0 +1,6 @@
+git lfs install
+git lfs track "*.rar" "*.pptx"
+git add .gitattributes
+git add NMB/
+git commit -m "Add large files with LFS"
+git push origin main
