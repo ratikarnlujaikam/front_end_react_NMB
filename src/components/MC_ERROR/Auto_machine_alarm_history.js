@@ -48,6 +48,7 @@ class Auto_machine_alarm_history extends Component {
 
       optionSelected: null,
       isDisable: false,
+      reportGraph2: [],
     };
   }
 
@@ -469,6 +470,23 @@ class Auto_machine_alarm_history extends Component {
       },
       // Rest of the code...
     });
+
+    const result2 = await httpClient.get(
+      server.MC_ERROR_URL +
+        "_Data/" +
+        this.state.Table +
+        "/" +
+        this.state.Line[0].label +
+        "/" +
+        this.state.startDate +
+        "/" +
+        this.state.finishDate
+    );
+    // console.log(result2);
+    this.setState({
+      reportGraph2: result2.data.result,
+    });
+    console.log(this.state.reportGraph2);
   };
 
   getTable = async () => {
@@ -488,6 +506,44 @@ class Auto_machine_alarm_history extends Component {
     }));
     this.setState({ listLine: options });
   };
+
+  // renderReport() {
+  //   const { reportGraph2, startDate } = this.state;
+  //   // console.log(report);
+  //   // Check if report is not null or undefined and has items
+  //   if (reportGraph2 && reportGraph2.length > 0) {
+  //     // Extract all unique keys from the report items
+  //     const keys = ["Error", "Occurred", "Restored", "Line", "Date"];
+  //     const pivotedData = keys.map((key) => {
+  //       return (
+  //         <tr key={key}>
+  //           <td>{key}</td>
+  //           {reportGraph2.map((item, index) => (
+  //             <td key={index}>
+  //               {key === "Error" ||
+  //               key === "Occurred" ||
+  //               key === "Restored" ||
+  //               key === "Line" ||
+  //               key === "Date"
+  //                 ? item[key]
+  //                 : this.formatDate(startDate) +
+  //                   "-" +
+  //                   this.formatDay(item["Day_txt"])}
+  //             </td>
+  //           ))}
+  //         </tr>
+  //       );
+  //     });
+
+  //     return pivotedData;
+  //   } else {
+  //     return (
+  //       <tr>
+  //         <td colSpan={reportGraph2.length + 1}>No data available</td>
+  //       </tr>
+  //     );
+  //   }
+  // }
 
   render() {
     console.log(this.state.xAxis);
@@ -601,7 +657,7 @@ class Auto_machine_alarm_history extends Component {
                         />
                       </div>
                     </div>
-                    
+
                     <div>
                       <label htmlFor="option1">
                         <input
@@ -667,6 +723,7 @@ class Auto_machine_alarm_history extends Component {
                                 Swal.showLoading();
                                 try {
                                   await this.doGetDataReport();
+                                  // await this.doGetDataReport2();
                                   Swal.close();
 
                                   if (
@@ -693,9 +750,11 @@ class Auto_machine_alarm_history extends Component {
                                       ) &&
                                       this.state.reportGraph[0].length === null
                                     ) {
+                                      console.log(this.state.reportGraph[0]);
+
                                       Swal.fire({
                                         icon: "error",
-                                        title: "No production data",
+                                        title: "No production data1",
                                         text: "Please select another date",
                                       });
                                     }
@@ -730,6 +789,23 @@ class Auto_machine_alarm_history extends Component {
                         Submit
                       </button>
                     </div>
+
+
+                     {/* Download button */}
+                     <div className="col-md-1">
+                      <CSVLink data={this.state.reportGraph2}
+                        filename={'Alarm_history.csv'}
+                      >
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          style={{ marginTop: 30 }}
+                        >
+                          Download
+                        </button>
+                      </CSVLink>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -737,81 +813,80 @@ class Auto_machine_alarm_history extends Component {
                 <div class="container-fluid">
                   <div className="row">
                     <div className="col-12">
-                     
-
-                        {/* Insert Xbar Chart */}
-                        <div className="row" style={{ width: "100%" }}>
-                          <div style={{ width: "1%" }}></div>
-                          <div
-                            className="card card-warning"
-                            style={{ width: "99%" }}
-                          >
-                            <div className="card-body">
-                              <div className="row">
-                                <div   style={{
-                                      width: "100%",
-                                      backgroundColor: "#E0FFFF", // Light blue color
-                                      border: "1px solid #4682B4", // Border color matching the background color
-                                      borderRadius: "10px",
-                                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                    }}>
-                                  <ReactApexChart
-                                    options={this.state.options}
-                                    series={this.state.seriesY}
-                                    type="line"
-                                    height={450}
-                                  />
-                                </div>
+                      {/* Insert Xbar Chart */}
+                      <div className="row" style={{ width: "100%" }}>
+                        <div style={{ width: "1%" }}></div>
+                        <div
+                          className="card card-warning"
+                          style={{ width: "99%" }}
+                        >
+                          <div className="card-body">
+                            <div className="row">
+                              <div
+                                style={{
+                                  width: "100%",
+                                  backgroundColor: "#E0FFFF", // Light blue color
+                                  border: "1px solid #4682B4", // Border color matching the background color
+                                  borderRadius: "10px",
+                                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                }}
+                              >
+                                <ReactApexChart
+                                  options={this.state.options}
+                                  series={this.state.seriesY}
+                                  type="line"
+                                  height={450}
+                                />
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                   
-                  </div>
-                </div>
-              </div>
-              <div class="content">
-                <div class="container-fluid">
-                  <div className="row">
-                    <div className="col-12">
-                  
-                        {/* Chart Title */}
-                      
-
-                        {/* Insert Xbar Chart */}
-                        <div className="row" style={{ width: "100%" }}>
-                          <div style={{ width: "1%" }}></div>
-                          <div
-                            className="card card-warning"
-                            style={{ width: "99%" }}
-                          >
-                            <div className="card-body">
-                              <div className="row">
-                                <div   style={{
-                                      width: "100%",
-                                      backgroundColor: "#E0FFFF", // Light blue color
-                                      border: "1px solid #4682B4", // Border color matching the background color
-                                      borderRadius: "10px",
-                                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                                    }}>
-                                  <ReactApexChart
-                                    options={this.state.options_MC}
-                                    series={this.state.seriesY_MC}
-                                    type="line"
-                                    height={450}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    
                     </div>
                   </div>
                 </div>
               </div>
-              {/* Table*/}
+
+              <div class="content">
+                <div class="container-fluid">
+                  <div className="row">
+                    <div className="col-12">
+                      {/* Chart Title */}
+
+                      {/* Insert Xbar Chart */}
+                      <div className="row" style={{ width: "100%" }}>
+                        <div style={{ width: "1%" }}></div>
+                        <div
+                          className="card card-warning"
+                          style={{ width: "99%" }}
+                        >
+                          <div className="card-body">
+                            <div className="row">
+                              <div
+                                style={{
+                                  width: "100%",
+                                  backgroundColor: "#E0FFFF", // Light blue color
+                                  border: "1px solid #4682B4", // Border color matching the background color
+                                  borderRadius: "10px",
+                                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                }}
+                              >
+                                <ReactApexChart
+                                  options={this.state.options_MC}
+                                  series={this.state.seriesY_MC}
+                                  type="line"
+                                  height={450}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+         
             </div>
           </div>
         </div>
