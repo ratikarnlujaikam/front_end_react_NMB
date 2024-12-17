@@ -23,7 +23,7 @@ class Monthly_LAR_report_all_Model extends Component {
     this.state = {
       Lines: [],
       selectedOption: "line",
-      selectedDesign:[],
+      selectedDesign: [],
       Month: [],
       process: [],
       report: [],
@@ -65,7 +65,6 @@ class Monthly_LAR_report_all_Model extends Component {
   componentDidMount = async () => {
     await this.getline();
     this.setState({ countdownEnabled: false });
-
 
     const { location } = this.props;
     const { state } = location;
@@ -501,7 +500,6 @@ class Monthly_LAR_report_all_Model extends Component {
           },
         },
       });
-      
     } catch (error) {
       console.error("Error fetching data:", error);
       // Handle the error, display an error message, or log it as needed
@@ -976,7 +974,6 @@ class Monthly_LAR_report_all_Model extends Component {
     this.setState({ startDate: event.target.value });
   };
   render() {
-
     return (
       <div className="content-wrapper">
         <div className="content" style={{ paddingTop: 10 }}>
@@ -1110,92 +1107,105 @@ class Monthly_LAR_report_all_Model extends Component {
                       </div>
 
                       <div className="col-md-3">
-  <button
-    disabled={this.state.isDisable}
-    onClick={async (e) => {
-      try {
-        if (this.state.selectedOption === "line") {
-          if (!this.state.Lines || this.state.Lines.length === 0) {
-            Swal.fire({
-              icon: "warning",
-              title: "Missing Information",
-              text: "Please select at least one line before fetching data.",
-            });
-            return;
-          }
-        } else if (this.state.selectedOption === "design") {
-          if (!this.state.selectedDesign || this.state.selectedDesign.length === 0) {
-            Swal.fire({
-              icon: "warning",
-              title: "Missing Information",
-              text: "Please select at least one design before fetching data.",
-            });
-            return;
-          }
-        }
+                        <button
+                          disabled={this.state.isDisable}
+                          onClick={async (e) => {
+                            try {
+                              if (this.state.selectedOption === "line") {
+                                if (
+                                  !this.state.Lines ||
+                                  this.state.Lines.length === 0
+                                ) {
+                                  Swal.fire({
+                                    icon: "warning",
+                                    title: "Missing Information",
+                                    text: "Please select at least one line before fetching data.",
+                                  });
+                                  return;
+                                }
+                              } else if (
+                                this.state.selectedOption === "design"
+                              ) {
+                                if (
+                                  !this.state.selectedDesign ||
+                                  this.state.selectedDesign.length === 0
+                                ) {
+                                  Swal.fire({
+                                    icon: "warning",
+                                    title: "Missing Information",
+                                    text: "Please select at least one design before fetching data.",
+                                  });
+                                  return;
+                                }
+                              }
 
-        if (!this.state.startDate) {
-          Swal.fire({
-            icon: "warning",
-            title: "Missing Start Date",
-            text: "Please select a start date before fetching data.",
-          });
-          return;
-        }
+                              if (!this.state.startDate) {
+                                Swal.fire({
+                                  icon: "warning",
+                                  title: "Missing Start Date",
+                                  text: "Please select a start date before fetching data.",
+                                });
+                                return;
+                              }
 
-        this.setState({ isDisable: true });
+                              this.setState({ isDisable: true });
 
-        if (
-          (this.state.selectedOption === "line" && !this.state.Lines) ||
-          (this.state.selectedOption === "design" && !this.state.selectedDesign)
-        ) {
-          Swal.fire({
-            icon: "error",
-            title: "Missing Selection",
-            text: `Please select ${
-              this.state.selectedOption === "line" ? "Line" : "Design"
-            }`,
-          }).then(() => {
-            this.setState({ isDisable: false }); // Re-enable the button
-          });
-        } else {
-          Swal.fire({
-            icon: "info",
-            title: "Loading Data",
-            timer: 60000,
-            allowOutsideClick: false,
-            didOpen: async () => {
-              Swal.showLoading();
+                              if (
+                                (this.state.selectedOption === "line" &&
+                                  !this.state.Lines) ||
+                                (this.state.selectedOption === "design" &&
+                                  !this.state.selectedDesign)
+                              ) {
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Missing Selection",
+                                  text: `Please select ${
+                                    this.state.selectedOption === "line"
+                                      ? "Line"
+                                      : "Design"
+                                  }`,
+                                }).then(() => {
+                                  this.setState({ isDisable: false }); // Re-enable the button
+                                });
+                              } else {
+                                Swal.fire({
+                                  icon: "info",
+                                  title: "Loading Data",
+                                  timer: 60000,
+                                  allowOutsideClick: false,
+                                  didOpen: async () => {
+                                    Swal.showLoading();
 
-              if (this.state.selectedOption === "line") {
-                await this.doGetDataReport();
-              } else if (this.state.selectedOption === "design") {
-                await this.doGetDataReport_Design();
-              }
+                                    if (this.state.selectedOption === "line") {
+                                      await this.doGetDataReport();
+                                    } else if (
+                                      this.state.selectedOption === "design"
+                                    ) {
+                                      await this.doGetDataReport_Design();
+                                    }
 
-              Swal.close();
-            },
-          }).finally(() => {
-            this.setState({ isDisable: false }); // Re-enable the button after operation
-          });
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Something went wrong. Please try again.",
-        });
-        this.setState({ isDisable: false }); // Re-enable the button in case of error
-      }
-    }}
-    type="submit"
-    className="btn btn-primary"
-    style={{ marginTop: 30 }}
-  >
-    Submit
-  </button>
-</div>
-
+                                    Swal.close();
+                                  },
+                                }).finally(() => {
+                                  this.setState({ isDisable: false }); // Re-enable the button after operation
+                                });
+                              }
+                            } catch (error) {
+                              Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "Something went wrong. Please try again.",
+                              });
+                              this.setState({ isDisable: false }); // Re-enable the button in case of error
+                            }
+                          }}
+                          type="submit"
+                          className="btn btn-primary"
+                          style={{ marginTop: 30 }}
+                        >
+                          Submit
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

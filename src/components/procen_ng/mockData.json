@@ -1,0 +1,36 @@
+{
+    "data": [
+      { "Line": "1-4", "order_Line": "1", "order_by": 4, "Design": "3.5 inch FCC", "Plan_Percentage": 97.85 },
+      { "Line": "1-5", "order_Line": "1", "order_by": 5, "Design": "3.5 inch FCC", "Plan_Percentage": 76.46 },
+      { "Line": "1-6", "order_Line": "1", "order_by": 6, "Design": "3.5 inch SP", "Plan_Percentage": 66.82 },
+      { "Line": "1-7", "order_Line": "1", "order_by": 7, "Design": "3.5 inch SP", "Plan_Percentage": null },
+      { "Line": "1-8", "order_Line": "1", "order_by": 8, "Design": "2.5 inch", "Plan_Percentage": 84.65 },
+      { "Line": "1-9", "order_Line": "1", "order_by": 9, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "1-10", "order_Line": "1", "order_by": 10, "Design": "3.5 inch SP", "Plan_Percentage": null },
+      { "Line": "2-4", "order_Line": "2", "order_by": 4, "Design": "3.5 inch FCC", "Plan_Percentage": null },
+      { "Line": "2-5", "order_Line": "2", "order_by": 5, "Design": "3.5 inch FCC", "Plan_Percentage": null },
+      { "Line": "2-6", "order_Line": "2", "order_by": 6, "Design": "3.5 inch FCC", "Plan_Percentage": 98.1 },
+      { "Line": "2-8", "order_Line": "2", "order_by": 8, "Design": "3.5 inch FCC", "Plan_Percentage": 93.45 },
+      { "Line": "2-9", "order_Line": "2", "order_by": 9, "Design": "3.5 inch SP", "Plan_Percentage": 55.94 },
+      { "Line": "2-10", "order_Line": "2", "order_by": 10, "Design": "3.5 inch FCC", "Plan_Percentage": 84.16 },
+      { "Line": "2-11", "order_Line": "2", "order_by": 11, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "2-12", "order_Line": "2", "order_by": 12, "Design": "3.5 inch SP", "Plan_Percentage": 70.69 },
+      { "Line": "2-13", "order_Line": "2", "order_by": 13, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "2-14", "order_Line": "2", "order_by": 14, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "3-6", "order_Line": "3", "order_by": 6, "Design": "3.5 inch FCC", "Plan_Percentage": 95.48 },
+      { "Line": "3-10", "order_Line": "3", "order_by": 10, "Design": "3.5 inch FCC", "Plan_Percentage": 83.48 },
+      { "Line": "3-14", "order_Line": "3", "order_by": 14, "Design": "3.5 inch FCC", "Plan_Percentage": 89.32 },
+      { "Line": "3-17", "order_Line": "3", "order_by": 17, "Design": "3.5 inch FCC", "Plan_Percentage": 90.96 },
+      { "Line": "3-22", "order_Line": "3", "order_by": 22, "Design": "3.5 inch SP", "Plan_Percentage": 55.32 },
+      { "Line": "3-24", "order_Line": "3", "order_by": 24, "Design": "3.5 inch SP", "Plan_Percentage": null },
+      { "Line": "3-26", "order_Line": "3", "order_by": 26, "Design": "2.5 inch", "Plan_Percentage": 77.33 },
+      { "Line": "3-29", "order_Line": "3", "order_by": 29, "Design": "3.5 inch SP", "Plan_Percentage": null },
+      { "Line": "3-30", "order_Line": "3", "order_by": 30, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "4-9", "order_Line": "4", "order_by": 9, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "4-10", "order_Line": "4", "order_by": 10, "Design": "3.5 inch SP", "Plan_Percentage": null },
+      { "Line": "4-11", "order_Line": "4", "order_by": 11, "Design": "2.5 inch", "Plan_Percentage": null },
+      { "Line": "4-12", "order_Line": "4", "order_by": 12, "Design": null, "Plan_Percentage": null },
+      { "Line": "E-4", "order_Line": "E", "order_by": 4, "Design": null, "Plan_Percentage": null }
+    ]
+  }
+  

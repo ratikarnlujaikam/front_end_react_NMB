@@ -9,7 +9,7 @@ import { CSVLink } from "react-csv";
 import ReactDOM from "react-dom";
 import ReactApexChart from "react-apexcharts";
 import ApexCharts from "apexcharts";
-
+import mockData from './mockData.json';  // ห้ามลืมตั้งค่าผ่าน webpack หรือ module bundler อื่นๆ
 //npm install @mui/material @emotion/react @emotion/styled
 
 class Procen_ng extends Component {
@@ -65,6 +65,77 @@ class Procen_ng extends Component {
       this.setState({ startDate: currentDate });
     });
   };
+  //จำลอง API
+  // doGetDataReport = async () => {
+  //   try {
+  //     // จำลองผลลัพธ์จาก API
+  //     const result = {
+  //       api_result: "ok",
+  //       data: {
+  //         listRawData: [
+  //           [
+  //             { "Line": "1-4", "order_Line": "1", "order_by": 4, "Design": "3.5 inch FCC", "Plan_Percentage": 97.85 },
+  //             { "Line": "1-5", "order_Line": "1", "order_by": 5, "Design": "3.5 inch FCC", "Plan_Percentage": 92.46 },
+  //             { "Line": "1-6", "order_Line": "1", "order_by": 6, "Design": "3.5 inch SP", "Plan_Percentage": 93.82 },
+  //             { "Line": "1-7", "order_Line": "1", "order_by": 7, "Design": "3.5 inch SP", "Plan_Percentage": null },
+  //             { "Line": "1-8", "order_Line": "1", "order_by": 8, "Design": "2.5 inch", "Plan_Percentage": 95.65 },
+  //             { "Line": "1-9", "order_Line": "1", "order_by": 9, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "1-10", "order_Line": "1", "order_by": 10, "Design": "3.5 inch SP", "Plan_Percentage": null },
+  //             { "Line": "2-4", "order_Line": "2", "order_by": 4, "Design": "3.5 inch FCC", "Plan_Percentage": null },
+  //             { "Line": "2-5", "order_Line": "2", "order_by": 5, "Design": "3.5 inch FCC", "Plan_Percentage": null },
+  //             { "Line": "2-6", "order_Line": "2", "order_by": 6, "Design": "3.5 inch FCC", "Plan_Percentage": 98.1 },
+  //             { "Line": "2-8", "order_Line": "2", "order_by": 8, "Design": "3.5 inch FCC", "Plan_Percentage": 93.45 },
+  //             { "Line": "2-9", "order_Line": "2", "order_by": 9, "Design": "3.5 inch SP", "Plan_Percentage": 87.94 },
+  //             { "Line": "2-10", "order_Line": "2", "order_by": 10, "Design": "3.5 inch FCC", "Plan_Percentage": 94.16 },
+  //             { "Line": "2-11", "order_Line": "2", "order_by": 11, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "2-12", "order_Line": "2", "order_by": 12, "Design": "3.5 inch SP", "Plan_Percentage": 88.69 },
+  //             { "Line": "2-13", "order_Line": "2", "order_by": 13, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "2-14", "order_Line": "2", "order_by": 14, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "3-6", "order_Line": "3", "order_by": 6, "Design": "3.5 inch FCC", "Plan_Percentage": 95.48 },
+  //             { "Line": "3-10", "order_Line": "3", "order_by": 10, "Design": "3.5 inch FCC", "Plan_Percentage": 93.48 },
+  //             { "Line": "3-14", "order_Line": "3", "order_by": 14, "Design": "3.5 inch FCC", "Plan_Percentage": 94.32 },
+  //             { "Line": "3-17", "order_Line": "3", "order_by": 17, "Design": "3.5 inch FCC", "Plan_Percentage": 90.96 },
+  //             { "Line": "3-22", "order_Line": "3", "order_by": 22, "Design": "3.5 inch SP", "Plan_Percentage": 55.32 },
+  //             { "Line": "3-24", "order_Line": "3", "order_by": 24, "Design": "3.5 inch SP", "Plan_Percentage": null },
+  //             { "Line": "3-26", "order_Line": "3", "order_by": 26, "Design": "2.5 inch", "Plan_Percentage": 77.33 },
+  //             { "Line": "3-29", "order_Line": "3", "order_by": 29, "Design": "3.5 inch SP", "Plan_Percentage": null },
+  //             { "Line": "3-30", "order_Line": "3", "order_by": 30, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "4-9", "order_Line": "4", "order_by": 9, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "4-10", "order_Line": "4", "order_by": 10, "Design": "3.5 inch SP", "Plan_Percentage": null },
+  //             { "Line": "4-11", "order_Line": "4", "order_by": 11, "Design": "2.5 inch", "Plan_Percentage": null },
+  //             { "Line": "4-12", "order_Line": "4", "order_by": 12, "Design": null, "Plan_Percentage": null },
+  //             { "Line": "E-4", "order_Line": "E", "order_by": 4, "Design": null, "Plan_Percentage": null }
+  //           ]
+  //         ]
+  //       }
+  //     };
+  
+  //     // เข้าถึง listRawData
+  //     let rawData = result.data.listRawData[0];  // [0] เพราะว่า listRawData เป็น array ที่มี 1 อัน
+  //     console.log(rawData);
+  
+  //     // ดึงข้อมูล Plan_Percentage ที่ไม่เป็น null
+  //     const result_1Array = rawData.map(item => item.Plan_Percentage).filter(Boolean);
+  //     console.log(result_1Array);
+  
+  //     // รวมข้อมูลจาก rawData
+  //     let mergedData = [];
+  //     for (let i = 0; i < rawData.length; i++) {
+  //       mergedData.push(rawData[i]);
+  //     }
+  
+  //     this.setState({
+  //       Raw_Dat: mergedData,
+  //       report: result.api_result,
+  //       rawData: mergedData,
+  //       result_1Array,
+  //       isDisable: false,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  
   doGetDataReport = async () => {
     try {
       const result = await httpClient.get(server.percen_OEE_URL);
