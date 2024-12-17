@@ -9,12 +9,11 @@ import { CSVLink } from "react-csv";
 import ReactDOM from "react-dom";
 import ReactApexChart from "react-apexcharts";
 import ApexCharts from "apexcharts";
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 class NGlotrecord extends Component {
   constructor(props) {
@@ -49,15 +48,15 @@ class NGlotrecord extends Component {
       listyear: [],
       listMonth: [],
       listModel: [],
-      listlocation : [],
-      listStatus : [],
+      listlocation: [],
+      listStatus: [],
 
       optionSelected: null,
       isDisable: false,
     };
   }
   getModel = async () => {
-    const array = await httpClient.get(server.MODELNGLOTRECORD_URL );
+    const array = await httpClient.get(server.MODELNGLOTRECORD_URL);
     const options = array.data.result.map((d) => ({
       label: d.Model,
     }));
@@ -66,12 +65,22 @@ class NGlotrecord extends Component {
   doGetDataReport1 = async () => {
     const modelLabel =
       this.state.Model.label === "**ALL**" ? "**ALL**" : this.state.Model.label;
-    const moLabel = this.state.dobyMO === undefined || this.state.dobyMO === '' ? "-" : this.state.dobyMO;
+    const moLabel =
+      this.state.dobyMO === undefined || this.state.dobyMO === ""
+        ? "-"
+        : this.state.dobyMO;
 
-
-   console.log(moLabel);
+    console.log(moLabel);
     const result = await httpClient.get(
-      server.SUMMARYNGLOT_URL + "/" + modelLabel + "/" + this.state.startDate + "/" + this.state.finishDate + "/" + moLabel
+      server.SUMMARYNGLOT_URL +
+        "/" +
+        modelLabel +
+        "/" +
+        this.state.startDate +
+        "/" +
+        this.state.finishDate +
+        "/" +
+        moLabel
     );
     let rawData = result.data.listRawData1;
     console.log(rawData);
@@ -85,16 +94,25 @@ class NGlotrecord extends Component {
       report1: result.data.result,
       isDisable: false,
     });
-   
   };
   doGetDataReport2 = async () => {
     const modelLabel =
       this.state.Model.label === "**ALL**" ? "**ALL**" : this.state.Model.label;
-    const moLabel = this.state.dobyMO === undefined || this.state.dobyMO === '' ? "-" : this.state.dobyMO;
+    const moLabel =
+      this.state.dobyMO === undefined || this.state.dobyMO === ""
+        ? "-"
+        : this.state.dobyMO;
 
-   
     const result = await httpClient.get(
-      server.DETAILNGLOT_URL + "/" + modelLabel + "/" + this.state.startDate + "/" + this.state.finishDate + "/" + moLabel
+      server.DETAILNGLOT_URL +
+        "/" +
+        modelLabel +
+        "/" +
+        this.state.startDate +
+        "/" +
+        this.state.finishDate +
+        "/" +
+        moLabel
     );
     let rawData = result.data.listRawData2;
     console.log(rawData);
@@ -112,11 +130,21 @@ class NGlotrecord extends Component {
   doGetDataReport3 = async () => {
     const modelLabel =
       this.state.Model.label === "**ALL**" ? "**ALL**" : this.state.Model.label;
-   const moLabel = this.state.dobyMO === undefined || this.state.dobyMO === '' ? "-" : this.state.dobyMO;
+    const moLabel =
+      this.state.dobyMO === undefined || this.state.dobyMO === ""
+        ? "-"
+        : this.state.dobyMO;
 
-   
     const result = await httpClient.get(
-      server.TAKEOUTNGLOT_URL + "/" + modelLabel + "/" + this.state.startDate + "/" + this.state.finishDate + "/" + moLabel
+      server.TAKEOUTNGLOT_URL +
+        "/" +
+        modelLabel +
+        "/" +
+        this.state.startDate +
+        "/" +
+        this.state.finishDate +
+        "/" +
+        moLabel
     );
     let rawData = result.data.listRawData3;
     console.log(rawData);
@@ -137,19 +165,53 @@ class NGlotrecord extends Component {
 
     switch (type) {
       case "Summary":
-        columns = ["Date", "ModelGroup", "Item_No", "Line", "MO", "Emp", "NG_total", "Actual_receive", "For_Other_Testing"];
-        await this.doGetDataReport1();  // Fetch data for "Summary"
-      
+        columns = [
+          "Date",
+          "ModelGroup",
+          "Item_No",
+          "Line",
+          "MO",
+          "Emp",
+          "NG_total",
+          "Actual_receive",
+          "For_Other_Testing",
+        ];
+        await this.doGetDataReport1(); // Fetch data for "Summary"
+
         break;
 
       case "Detail_NG":
-        columns = ["Date", "ModelGroup", "Item_No", "Line", "MO", "NG_Case", "QTY", "Item", "TimeStamp","Emp"];
+        columns = [
+          "Date",
+          "ModelGroup",
+          "Item_No",
+          "Line",
+          "MO",
+          "NG_Case",
+          "QTY",
+          "Item",
+          "TimeStamp",
+          "Emp",
+        ];
         await this.doGetDataReport2();
-        
+
         break;
 
       case "Take_Out":
-        columns = ["Model", "Line", "MO", "Reason", "Motor", "Qty", "Status", "Section", "Updater", "Emp_IO", "TimeStamp", "MfgDate"];
+        columns = [
+          "Model",
+          "Line",
+          "MO",
+          "Reason",
+          "Motor",
+          "Qty",
+          "Status",
+          "Section",
+          "Updater",
+          "Emp_IO",
+          "TimeStamp",
+          "MfgDate",
+        ];
         await this.doGetDataReport3();
         break;
 
@@ -159,10 +221,8 @@ class NGlotrecord extends Component {
 
     this.setState({ columns, data });
   }
-  
-    
+
   componentDidMount = async () => {
-  
     await this.getModel();
   };
   renderreport1 = () => {
@@ -176,61 +236,68 @@ class NGlotrecord extends Component {
           <td align="center">{item["Line"]}</td>
           <td align="center">{item["MO"]}</td>
           <td align="center">{item["Emp"]}</td>
-          <td align="center">{(item.NG_total || 0).toLocaleString()}</td>  {/* Default value for NG_total */}
-          <td align="center">{(item.Actual_receive || 0).toLocaleString()}</td>  {/* Default value for Actual_receive */}
-          <td align="center">{(item.For_Other_Testing || 0).toLocaleString()}</td>  {/* Default value for For_Other_Testing */}
+          <td align="center">{(item.NG_total || 0).toLocaleString()}</td>{" "}
+          {/* Default value for NG_total */}
+          <td align="center">
+            {(item.Actual_receive || 0).toLocaleString()}
+          </td>{" "}
+          {/* Default value for Actual_receive */}
+          <td align="center">
+            {(item.For_Other_Testing || 0).toLocaleString()}
+          </td>{" "}
+          {/* Default value for For_Other_Testing */}
         </tr>
       ));
-    } 
+    }
   };
 
-  
-  
-
-renderreport2 = () => {
+  renderreport2 = () => {
     if (this.state.report2 != null && this.state.report2.length > 0) {
-  return this.state.report2.map((item, index) => (
-    <tr key={index} align="center"> {/* ควรใช้ key ในการวนรอบ */}
-      <td align="center">{item["Date"]}</td>
-      <td align="center">{item["ModelGroup"]}</td>
-      <td align="center">{item["Item_No"]}</td>
-      <td align="center">{item["Line"]}</td>
-      <td align="center">{item["MO"]}</td>
-      <td align="Left">{item["NG_Case"]}</td>
-      <td align="center">{(item.QTY || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
-      <td align="center">{item["Item"]}</td>
-      <td align="center">{item["TimeStamp"]}</td>
-      <td align="center">{item["Emp"]}</td>
-
-    </tr>
-  ));
-}
+      return this.state.report2.map((item, index) => (
+        <tr key={index} align="center">
+          {" "}
+          {/* ควรใช้ key ในการวนรอบ */}
+          <td align="center">{item["Date"]}</td>
+          <td align="center">{item["ModelGroup"]}</td>
+          <td align="center">{item["Item_No"]}</td>
+          <td align="center">{item["Line"]}</td>
+          <td align="center">{item["MO"]}</td>
+          <td align="Left">{item["NG_Case"]}</td>
+          <td align="center">{(item.QTY || 0).toLocaleString()}</td>{" "}
+          {/* ใช้ค่าเริ่มต้น */}
+          <td align="center">{item["Item"]}</td>
+          <td align="center">{item["TimeStamp"]}</td>
+          <td align="center">{item["Emp"]}</td>
+        </tr>
+      ));
+    }
   };
-renderreport3 = () => {
+  renderreport3 = () => {
     if (this.state.report3 != null && this.state.report3.length > 0) {
-  return this.state.report3.map((item, index) => (
-    <tr key={index} align="center"> {/* ควรใช้ key ในการวนรอบ */}
-      <td align="center">{item["Model"]}</td>
-      <td align="center">{item["Line"]}</td>
-      <td align="center">{item["MO"]}</td>
-      <td align="center">{item["Reason"]}</td>
-      <td align="center">{item["Motor"]}</td>
-      <td align="center">{(item.Qty || 0).toLocaleString()}</td>   {/* ใช้ค่าเริ่มต้น */}
-      <td align="Left">{item["Status"]}</td>
-      
-      <td align="center">{item["Section"]}</td>
-      <td align="center">{item["Updater"]}</td>
-      <td align="center">{item["Emp_IO"]}</td>
-      <td align="center">{item["TimeStamp"]}</td>
-      <td align="center">{item["MfgDate"]}</td>
-
-    </tr>
-  ));
-}
+      return this.state.report3.map((item, index) => (
+        <tr key={index} align="center">
+          {" "}
+          {/* ควรใช้ key ในการวนรอบ */}
+          <td align="center">{item["Model"]}</td>
+          <td align="center">{item["Line"]}</td>
+          <td align="center">{item["MO"]}</td>
+          <td align="center">{item["Reason"]}</td>
+          <td align="center">{item["Motor"]}</td>
+          <td align="center">{(item.Qty || 0).toLocaleString()}</td>{" "}
+          {/* ใช้ค่าเริ่มต้น */}
+          <td align="Left">{item["Status"]}</td>
+          <td align="center">{item["Section"]}</td>
+          <td align="center">{item["Updater"]}</td>
+          <td align="center">{item["Emp_IO"]}</td>
+          <td align="center">{item["TimeStamp"]}</td>
+          <td align="center">{item["MfgDate"]}</td>
+        </tr>
+      ));
+    }
   };
   render() {
     const { Type, columns, data } = this.state;
-    console.log("Data: " ,this.state.data)
+    console.log("Data: ", this.state.data);
     return (
       <div className="content-wrapper">
         <div className="content" style={{ paddingTop: 100 }}>
@@ -238,7 +305,9 @@ renderreport3 = () => {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                <h1><strong>NG QTY Process Final ass'y and Rework room</strong></h1>
+                  <h1>
+                    <strong>NG QTY Process Final ass'y and Rework room</strong>
+                  </h1>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
@@ -246,7 +315,7 @@ renderreport3 = () => {
                       <a href="/Home">Home</a>
                     </li>
                     <li className="breadcrumb-item active">
-                    NG QTY Process Final ass'y and Rework room
+                      NG QTY Process Final ass'y and Rework room
                     </li>
                   </ol>
                 </div>
@@ -257,9 +326,7 @@ renderreport3 = () => {
 
         <div class="container-fluid">
           <div className="row">
-         
             <div className="col-12">
-              
               <div className="card card-primary card-outline">
                 <div className="card-header">
                   <h3 className="card-title">
@@ -268,31 +335,41 @@ renderreport3 = () => {
                 </div>
 
                 <div className="card-body">
-                
                   <div className="row">
                     {/* //Select Critiria "Model" */}
                     <div className="col-md-2">
-  <div className="form-group">
-    <label>Model</label>
-    <Select
-      options={this.state.listModel}
-      value={this.state.Model}
-      onChange={(e) => this.setState({ Model: e ,report1: [],  report2 : [] ,report3 : []  ,Type : []})}
-      placeholder="Select Model"
-    />
-  </div>
-</div>
-                       {/* //Select Start Date */}
-                       <div className="col-md-2">
                       <div className="form-group">
-                        <label>
-                          By Daily Select From &nbsp;
-                 
-                        </label>
+                        <label>Model</label>
+                        <Select
+                          options={this.state.listModel}
+                          value={this.state.Model}
+                          onChange={(e) =>
+                            this.setState({
+                              Model: e,
+                              report1: [],
+                              report2: [],
+                              report3: [],
+                              Type: [],
+                            })
+                          }
+                          placeholder="Select Model"
+                        />
+                      </div>
+                    </div>
+                    {/* //Select Start Date */}
+                    <div className="col-md-2">
+                      <div className="form-group">
+                        <label>By Daily Select From &nbsp;</label>
                         <input
                           value={this.state.startDate}
                           onChange={(e) => {
-                            this.setState({ startDate: e.target.value ,report1: [],  report2 : [] ,report3 : []  ,Type : [] });
+                            this.setState({
+                              startDate: e.target.value,
+                              report1: [],
+                              report2: [],
+                              report3: [],
+                              Type: [],
+                            });
                           }}
                           type="date"
                           className="form-control"
@@ -308,7 +385,13 @@ renderreport3 = () => {
                         <input
                           value={this.state.finishDate}
                           onChange={(e) => {
-                            this.setState({ finishDate: e.target.value ,report1: [],  report2 : [] ,report3 : []  ,Type : [] });
+                            this.setState({
+                              finishDate: e.target.value,
+                              report1: [],
+                              report2: [],
+                              report3: [],
+                              Type: [],
+                            });
                           }}
                           type="date"
                           className="form-control"
@@ -316,20 +399,19 @@ renderreport3 = () => {
                         />
                       </div>
                     </div>
-                    {/* //Select Start Date */}                  
+                    {/* //Select Start Date */}
                     <div className="col-md-2">
-                    <label>
-                        MO_No &nbsp;
-                 
-                        </label>
-                    <div className="input-group ">
-                    
+                      <label>MO_No &nbsp;</label>
+                      <div className="input-group ">
                         <input
                           value={this.state.dobyMO}
                           onChange={async (e) => {
                             await this.setState({
                               dobyMO: e.target.value,
-                              report1: [],  report2 : [] ,report3 : []  ,Type : []
+                              report1: [],
+                              report2: [],
+                              report3: [],
+                              Type: [],
                             });
                           }}
                           type="text"
@@ -341,91 +423,160 @@ renderreport3 = () => {
                     {/* <div className="col-md-1">
                       </div> */}
                     <div className="col-md-4">
-                    <FormControl>
-  <FormLabel id="demo-radio-buttons-group-label">Type</FormLabel>
-  <RadioGroup
-    row
-    aria-labelledby="demo-radio-buttons-group-label"
-    name="radio-buttons-group"
-    value={this.state.Type}
-    onChange={(e) => {
-      const selectedType = e.target.value;
+                      <FormControl>
+                        <FormLabel id="demo-radio-buttons-group-label">
+                          Type
+                        </FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-radio-buttons-group-label"
+                          name="radio-buttons-group"
+                          value={this.state.Type}
+                          onChange={(e) => {
+                            const selectedType = e.target.value;
 
-      // แสดง Swal.fire สำหรับการ Loading และเรียกฟังก์ชันที่ต้องการ
-      this.setState({ Type: selectedType, report1: [], report2: [], report3: [], data: [] }, async () => {
-        Swal.fire({
-          icon: "info",
-          title: "Loading",
-          timer: 360000, // Timeout loading
-          allowOutsideClick: false,
-          didOpen: async () => {
-            Swal.showLoading();
+                            // แสดง Swal.fire สำหรับการ Loading และเรียกฟังก์ชันที่ต้องการ
+                            this.setState(
+                              {
+                                Type: selectedType,
+                                report1: [],
+                                report2: [],
+                                report3: [],
+                                data: [],
+                              },
+                              async () => {
+                                Swal.fire({
+                                  icon: "info",
+                                  title: "Loading",
+                                  timer: 360000, // Timeout loading
+                                  allowOutsideClick: false,
+                                  didOpen: async () => {
+                                    Swal.showLoading();
 
-            // โหลดข้อมูลที่เกี่ยวข้อง
-            try {
-              await this.updateTable(this.state.Type); // โหลดข้อมูลใหม่ตามประเภท
-              Swal.close();
+                                    // โหลดข้อมูลที่เกี่ยวข้อง
+                                    try {
+                                      await this.updateTable(this.state.Type); // โหลดข้อมูลใหม่ตามประเภท
+                                      Swal.close();
 
-              // ตรวจสอบสถานะข้อมูลหลังโหลด
-              if (this.state.report1.length > 0 || this.state.report2.length > 0 || this.state.report3.length > 0) {
-                Swal.fire({
-                  icon: "success",
-                  title: "Data successfully",
-                  text: "successfully.",
-                });
-              } else {
-                Swal.fire({
-                  icon: "error",
-                  title: "No Data Found",
-                  text: "No data is available for the selected type. Please try again.",
-                });
-              }
-            } catch (error) {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "An error occurred while updating the data. Please try again.",
-              });
-            }
-          },
-        });
-      });
-    }}
-  >
-    <FormControlLabel value="Summary" control={<Radio />} label="Summary" />
-    <FormControlLabel value="Detail_NG" control={<Radio />} label="Detail NG" />
-    <FormControlLabel value="Take_Out" control={<Radio />} label="Take from production line" />
-  </RadioGroup>
-</FormControl>
-
-
-
-                 
-              
-
-
-                   
-                    
-                  </div>
-
-                  
-                    
+                                      // ตรวจสอบสถานะข้อมูลหลังโหลด
+                                      if (
+                                        this.state.report1.length > 0 ||
+                                        this.state.report2.length > 0 ||
+                                        this.state.report3.length > 0
+                                      ) {
+                                        Swal.fire({
+                                          icon: "success",
+                                          title: "Data successfully",
+                                          text: "successfully.",
+                                        });
+                                      } else {
+                                        Swal.fire({
+                                          icon: "error",
+                                          title: "No Data Found",
+                                          text: "No data is available for the selected type. Please try again.",
+                                        });
+                                      }
+                                    } catch (error) {
+                                      Swal.fire({
+                                        icon: "error",
+                                        title: "Error",
+                                        text: "An error occurred while updating the data. Please try again.",
+                                      });
+                                    }
+                                  },
+                                });
+                              }
+                            );
+                          }}
+                        >
+                          <FormControlLabel
+                            value="Summary"
+                            control={<Radio />}
+                            label="Summary"
+                          />
+                          <FormControlLabel
+                            value="Detail_NG"
+                            control={<Radio />}
+                            label="Detail NG"
+                          />
+                          <FormControlLabel
+                            value="Take_Out"
+                            control={<Radio />}
+                            label="Take from production line"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
                   </div>
                 </div>
-                
               </div>
-              </div>
-              </div>
-
-       
-          {/* Table3*/}
+            </div>
+          </div>
+                      {/* Table1*/}
+                      {this.state.Type === 'Summary' && (
           <div className="content" style={{ paddingTop: 5 }}>
             <section className="content-header">
               <div className="container-fluid">
                 <div className="row mb-1">
                   <div className="col-sm-6">
-                    <h1>Detail by item 
-                    </h1>
+                    <h1>Detail by item</h1>
+                  </div>
+                  <div className="col-sm-6">
+                    <CSVLink
+                      data={this.state.Raw_Dat1}
+                      filename={"report_inventory_shipment.csv"}
+                    >
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ marginTop: 3 }}
+                      >
+                        Download Details
+                      </button>
+                    </CSVLink>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+            )}
+            {/* Table2*/}
+            {this.state.Type === 'Detail_NG' && (
+          <div className="content" style={{ paddingTop: 5 }}>
+            <section className="content-header">
+              <div className="container-fluid">
+                <div className="row mb-1">
+                  <div className="col-sm-6">
+                    <h1>Detail by item</h1>
+                  </div>
+                  <div className="col-sm-6">
+                    <CSVLink
+                      data={this.state.Raw_Dat2}
+                      filename={"report_inventory_shipment.csv"}
+                    >
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ marginTop: 3 }}
+                      >
+                        Download Details
+                      </button>
+                    </CSVLink>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+            )}
+
+          {/* Table3*/}
+          {this.state.Type === 'Take_Out' && (
+          <div className="content" style={{ paddingTop: 5 }}>
+            <section className="content-header">
+              <div className="container-fluid">
+                <div className="row mb-1">
+                  <div className="col-sm-6">
+                    <h1>Detail by item</h1>
                   </div>
                   <div className="col-sm-6">
                     <CSVLink
@@ -445,18 +596,21 @@ renderreport3 = () => {
               </div>
             </section>
           </div>
+            )}
           <div className="col-12">
             <div class="content">
               <div class="container-fluid">
                 <div className="card card-primary">
                   <div
                     className="card-body table-responsive p-0"
-                    style={{ height: 430 ,
+                    style={{
+                      height: 430,
                       zIndex: "3",
                       position: "relative",
-                      zIndex: "0",}}
+                      zIndex: "0",
+                    }}
                   >
-                   <table className="table table-head-fixed text-nowrap table-hover">
+                    <table className="table table-head-fixed text-nowrap table-hover">
                       <thead>
                         <tr align="center">
                           {columns.map((col, index) => (
@@ -467,10 +621,10 @@ renderreport3 = () => {
                         </tr>
                       </thead>
                       <tbody>
-                      {this.renderreport1()}
-                      {this.renderreport2()}
-                      {this.renderreport3()}
-        </tbody>
+                        {this.renderreport1()}
+                        {this.renderreport2()}
+                        {this.renderreport3()}
+                      </tbody>
                     </table>
                   </div>
                 </div>
