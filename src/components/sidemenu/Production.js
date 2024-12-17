@@ -20,7 +20,6 @@ class Engineer extends Component {
   }
 
   render() {
-
     return (
       <div className="content-wrapper" style={{ border: "1px solid #e6f7ff" }}>
         <div className="content" style={{ paddingTop: 80 }}>
@@ -150,24 +149,11 @@ class Engineer extends Component {
                                         }}
                                       />{" "}
                                     </a>
-                                  <li className="breadcrumb-item">
-                                    <a href="http://wbp2.bp.minebea.local/Domino_SpindleDrawing/Availability/Excel_VBA%20_Production_report.xlsm">
-                                    Download  availability of production
-                                      <img
-                                        src="icons8-export-excel-48.png"
-                                        alt="Icon"
-                                        style={{
-                                          width: "30px",
-                                          height: "30px",
-                                          marginLeft: "5px",
-                                        }}
-                                      />{" "}
-                                    </a>
                                     <li className="breadcrumb-item">
-                                      <a href="/Test_graph">
-                                        Production Report's Traceability
+                                      <a href="http://wbp2.bp.minebea.local/Domino_SpindleDrawing/Availability/Excel_VBA%20_Production_report.xlsm">
+                                        Download availability of production
                                         <img
-                                          src="icons8-graph-50.png"
+                                          src="icons8-export-excel-48.png"
                                           alt="Icon"
                                           style={{
                                             width: "30px",
@@ -176,10 +162,9 @@ class Engineer extends Component {
                                           }}
                                         />{" "}
                                       </a>
-
                                       <li className="breadcrumb-item">
-                                        <a href="/Compare_Output">
-                                          Compare Output & NG With Target
+                                        <a href="/Test_graph">
+                                          Production Report's Traceability
                                           <img
                                             src="icons8-graph-50.png"
                                             alt="Icon"
@@ -192,8 +177,8 @@ class Engineer extends Component {
                                         </a>
 
                                         <li className="breadcrumb-item">
-                                          <a href="/Compare_Output_month">
-                                            %NG Monthly's Summary
+                                          <a href="/Compare_Output">
+                                            Compare Output & NG With Target
                                             <img
                                               src="icons8-graph-50.png"
                                               alt="Icon"
@@ -206,8 +191,8 @@ class Engineer extends Component {
                                           </a>
 
                                           <li className="breadcrumb-item">
-                                            <a href="/Compare_Output_Day">
-                                              %NG Daily's Summary
+                                            <a href="/Compare_Output_month">
+                                              %NG Monthly's Summary
                                               <img
                                                 src="icons8-graph-50.png"
                                                 alt="Icon"
@@ -218,9 +203,23 @@ class Engineer extends Component {
                                                 }}
                                               />{" "}
                                             </a>
+
+                                            <li className="breadcrumb-item">
+                                              <a href="/Compare_Output_Day">
+                                                %NG Daily's Summary
+                                                <img
+                                                  src="icons8-graph-50.png"
+                                                  alt="Icon"
+                                                  style={{
+                                                    width: "30px",
+                                                    height: "30px",
+                                                    marginLeft: "5px",
+                                                  }}
+                                                />{" "}
+                                              </a>
+                                            </li>
                                           </li>
                                         </li>
-                                      </li>
                                       </li>
                                     </li>
                                   </li>
@@ -269,8 +268,8 @@ class Engineer extends Component {
                                 />{" "}
                               </a>
                               <li className="breadcrumb-item">
-                                <a href="/Daily_Report_Packing">
-                                  Daily Report Packing
+                                <a href="/NG_lotrecord">
+                                NG QTY Process Final ass'y and Rework room
                                   <img
                                     src="icons8-graph-50.png"
                                     alt="Icon"
@@ -282,8 +281,8 @@ class Engineer extends Component {
                                   />{" "}
                                 </a>
                                 <li className="breadcrumb-item">
-                                  <a href="/output_packing">
-                                    Matching Tray Daily Output
+                                  <a href="/Daily_Report_Packing">
+                                    Daily Report Packing
                                     <img
                                       src="icons8-graph-50.png"
                                       alt="Icon"
@@ -295,8 +294,8 @@ class Engineer extends Component {
                                     />{" "}
                                   </a>
                                   <li className="breadcrumb-item">
-                                    <a href="/Packed_half_pallet">
-                                      Packing Pallet in progress
+                                    <a href="/output_packing">
+                                      Matching Tray Daily Output
                                       <img
                                         src="icons8-graph-50.png"
                                         alt="Icon"
@@ -308,55 +307,64 @@ class Engineer extends Component {
                                       />{" "}
                                     </a>
                                     <li className="breadcrumb-item">
-                                      <a href="/Output_Final_Before_QA">
-                                        Daily Output Final ass’y (Before QA)
+                                      <a href="/Packed_half_pallet">
+                                        Packing Pallet in progress
+                                        <img
+                                          src="icons8-graph-50.png"
+                                          alt="Icon"
+                                          style={{
+                                            width: "30px",
+                                            height: "30px",
+                                            marginLeft: "5px",
+                                          }}
+                                        />{" "}
                                       </a>
                                       <li className="breadcrumb-item">
-                                        <a href="/Output_Final_after_QA">
-                                          Daily Output Final ass’y (After QA)
+                                        <a href="/Output_Final_Before_QA">
+                                          Daily Output Final ass’y (Before QA)
                                         </a>
                                         <li className="breadcrumb-item">
-                                          <a href="/Production_hold_record">
-                                            Production hold record
+                                          <a href="/Output_Final_after_QA">
+                                            Daily Output Final ass’y (After QA)
                                           </a>
-
                                           <li className="breadcrumb-item">
-                                            <a href="/Request_label_printing_report">
-                                              Request label printing report
+                                            <a href="/Production_hold_record">
+                                              Production hold record
                                             </a>
 
                                             <li className="breadcrumb-item">
-                                              <a href="/AlarmTraning">
-                                                Training expired record
+                                              <a href="/Request_label_printing_report">
+                                                Request label printing report
                                               </a>
 
                                               <li className="breadcrumb-item">
-                                                <a href="/ReportOJT">
-                                                  Training record report
+                                                <a href="/AlarmTraning">
+                                                  Training expired record
                                                 </a>
-                                          
-                                              <li className="breadcrumb-item">
-                                                <a href="/Sorting_status">
-                                                Sorting Status
-                                                
-                                                </a>
-                                                <img
-                                        src="icons8-box-64.png"
-                                        alt="Icon"
-                                        style={{
-                                          width: "30px",
-                                          height: "30px",
-                                          marginLeft: "5px",
-                                        }}
-                                      />{" "}
-   
-                                              </li>
+
+                                                <li className="breadcrumb-item">
+                                                  <a href="/ReportOJT">
+                                                    Training record report
+                                                  </a>
+
+                                                  <li className="breadcrumb-item">
+                                                    <a href="/Sorting_status">
+                                                      Sorting Status
+                                                    </a>
+                                                    <img
+                                                      src="icons8-box-64.png"
+                                                      alt="Icon"
+                                                      style={{
+                                                        width: "30px",
+                                                        height: "30px",
+                                                        marginLeft: "5px",
+                                                      }}
+                                                    />{" "}
+                                                  </li>
+                                                </li>
                                               </li>
                                             </li>
-
-
                                           </li>
-                                          
                                         </li>
                                       </li>
                                     </li>

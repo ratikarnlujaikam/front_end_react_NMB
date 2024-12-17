@@ -163,6 +163,8 @@ import Downtime_Zone_oven from "./components/procen_ng/percen_Downtime_Zone_oven
 import Downtime_Zone_packing from "./components/procen_ng/percen_Downtime_Zone_Packing";
 import Downtime_Zone_QA from "./components/procen_ng/percen_Downtime_Zone_QA";
 import Downtime_Zone_Sorting from "./components/procen_ng/percen_Downtime_Zone_sorting";
+import NGlotrecord from "./components/NGlotrecord/NGlotrecord"
+
 // import TargetPage from './TargetPage';
 
 const SecuredRoute = ({ component: Component, ...rest }) => (
@@ -491,6 +493,7 @@ export default class App extends Component {
             <SecuredRoute path="/Downtime_Zone_packing" component={Downtime_Zone_packing} />
             <SecuredRoute path="/Downtime_Zone_QA" component={Downtime_Zone_QA} />
             <SecuredRoute path="/Downtime_Zone_Sorting" component={Downtime_Zone_Sorting} />
+            <SecuredRoute path="/NG_lotrecord" component={NGlotrecord} /> 
             <Route exact={true} path="/" component={this.redirectToLogin} />
             <Route exact={true} path="*" component={this.redirectToLogin} />
           </Switch>{" "}

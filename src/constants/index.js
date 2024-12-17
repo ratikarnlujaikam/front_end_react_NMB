@@ -782,6 +782,12 @@ SUMMARYPC_URL : `api/pc_inventory/Summary`,
 SUMMARYPCDETAIL_URL : `api/pc_inventory/Summarydetail`,
 STATUSPC_URL : `api/pc_inventory/Status`,
 MBAFG_URL : `api/pc_inventory/MBAFG`,
+
+//NGLOTRECORD
+MODELNGLOTRECORD_URL : `api/NGlotrecord/Model`,
+SUMMARYNGLOT_URL : `api/NGlotrecord/SummaryNGlot`,
+DETAILNGLOT_URL : `api/NGlotrecord/DetailNGlot`,
+TAKEOUTNGLOT_URL : `api/NGlotrecord/TakeoutNGlot`,
 };
 
 export const key = {
