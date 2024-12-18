@@ -166,7 +166,9 @@ class NGlotrecord extends Component {
     switch (type) {
       case "Summary":
         columns = [
+          "Inventory_Month",
           "Date",
+          "State",
           "ModelGroup",
           "Item_No",
           "Line",
@@ -230,7 +232,9 @@ class NGlotrecord extends Component {
     if (this.state.report1 != null && this.state.report1.length > 0) {
       return this.state.report1.map((item, index) => (
         <tr key={index} align="center">
+         <td align="center">{item["Inventory_Month"]}</td>
           <td align="center">{item["Date"]}</td>
+          <td align="center">{item["State"]}</td>
           <td align="center">{item["ModelGroup"]}</td>
           <td align="center">{item["Item_No"]}</td>
           <td align="center">{item["Line"]}</td>
