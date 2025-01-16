@@ -396,6 +396,7 @@ export const server = {
 
   SHIFTOPT_URL: `api/OPT/shift`,
   REPORTOPT_URL: `api/OPT/report`,
+  REPORTLINK_URL: `api/OPT/link_data_optor_tracking`,
 
   QPMBYLOTQA_URL : `api/QPM/lotQA`,
   QPMBYBARCODEMOTOR_URL : `api/QPM/barcodemotor`,
@@ -472,7 +473,7 @@ export const server = {
 
 
 
-    //
+    //Daily Store Issue
     MODEL_NAME_STORE_ISSUE_URL: `api/store_issue/ModelGroup`,
     ITEMNO__NAME_STORE_ISSUE_URL: `api/store_issue/ItemNo`,
     STORE_ISSUE_URL: `api/store_issue/Master`,
@@ -788,6 +789,13 @@ MODELNGLOTRECORD_URL : `api/NGlotrecord/Model`,
 SUMMARYNGLOT_URL : `api/NGlotrecord/SummaryNGlot`,
 DETAILNGLOT_URL : `api/NGlotrecord/DetailNGlot`,
 TAKEOUTNGLOT_URL : `api/NGlotrecord/TakeoutNGlot`,
+
+//Top 10 defect 
+MODEL_NGratiomonitoring_URL : `api/NGrationmonitoring/Model`,
+VALUE_Y_TOP10MONITORING_URL : `api/NGrationmonitoring/Top10NG`,
+Year_NGratiomonitoring_URL : `api/NGrationmonitoring/Year`,
+VALUE_Y_TOP10MONTHLYMONITORING_URL : `api/NGrationmonitoring/Top10NGmonthly`,
+TOP10MONITORINGTABLE_URL : `api/NGrationmonitoring/Top10NGtable`
 };
 
 export const key = {

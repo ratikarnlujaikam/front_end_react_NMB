@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { key, server } from "../../constants";
 import { httpClient } from "../../utils/HttpClient";
-import Chart from "react-apexcharts";
 import moment from "moment";
-import Select from "react-select";
 import Swal from "sweetalert2";
 import { CSVLink } from "react-csv";
 import ReactApexChart from "react-apexcharts";
-import ApexCharts from "apexcharts";
+
 
 class Operator_tracking_data extends Component {
   constructor(props) {
@@ -38,6 +36,25 @@ class Operator_tracking_data extends Component {
   componentDidMount = async () => {
     await this.getModel();
     // await this.getInsType();
+
+    const { location } = this.props;
+    const { state } = location;
+    const urlPrams = new URLSearchParams(window.location.search);
+  
+    if (urlPrams.toString() !== "") {
+      console.log(urlPrams);
+      const startDate_like = urlPrams.get("startDate");
+  
+      this.setState(
+        {
+          startDate: startDate_like,
+        },
+        () => {
+          // ดึงข้อมูลหลังจากตั้งค่า state
+          this.doGetDataReport();
+        }
+      );
+    }
   };
 
   // report with select model,date,type
@@ -126,12 +143,18 @@ class Operator_tracking_data extends Component {
       ],
       options: {
         chart: {
-          type: "column",
-          height: 300,
+          height: 350,
+          type: "line",
           stacked: true,
-          toolbar: {
-            show: true,
+          events: {
+            dataPointSelection: (event, chartContext, config) => {
+              const selectedCategory = this.state.Line_No[config.dataPointIndex]; // เข้าถึงค่าใน Line_No ที่เลือก
+              console.log(selectedCategory);
+              
+              this.props.history.push(`/LAR_BY_TEAM_PRODUCTION_LINK?&startDate=${this.state.startDate}&line=${selectedCategory}`)
+            }
           },
+          marginLeft: 0,
         },
         dataLabels: {
           enabled: false,
@@ -269,14 +292,14 @@ class Operator_tracking_data extends Component {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1>Daily operator tracking record</h1>
+                  <h1>Operator tracking data</h1>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
                     <li className="breadcrumb-item">
                       <a href="/Home">Home</a>
                     </li>
-                    <li className="breadcrumb-item active">Daily operator tracking record</li>
+                    <li className="breadcrumb-item active">Operator tracking data</li>
                   </ol>
                 </div>
               </div>

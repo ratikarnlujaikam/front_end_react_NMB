@@ -213,7 +213,7 @@ class percen_ng extends Component {
           <span style="color: black; font-weight: bold;">${curr["RowNum"]}. </span>
           <span style="color: #8000ff; font-weight: bold;">${curr["Equipment_No."]}</span>
           <span style="color: black; font-weight: bold;"> time</span>
-          <span style="color: #8000ff; font-weight: bold;">${curr["TimeDifferenceInMinutes"]}</span>
+          <span style="color: #8000ff; font-weight: bold;">${curr["NG"]}</span>
           <span style="color: black; font-weight: bold;"> Minutes</span>
           <br/>
           <span style="color: black; font-weight: bold;">Request</span>

@@ -140,6 +140,7 @@ import Sorting_status from "./components/packing/Sorting_status";
 import Mainplan_allreport from "./components/Mainplan/Mainplanreport";
 import LAR_BY_TEAM_PRODUCTION from "./components/LARInspection/LAR_team_prodution";
 
+
 import Graph_trendmaster from "./components/LARInspection/graph_trendmaster";
 import add_sidemenu from "./components/sidemenu/add_sidemenu";
 import Missing_part_daily from "./components/Missing_part/Missing_part_daily";
@@ -164,9 +165,12 @@ import Downtime_Zone_packing from "./components/procen_ng/percen_Downtime_Zone_P
 import Downtime_Zone_QA from "./components/procen_ng/percen_Downtime_Zone_QA";
 import Downtime_Zone_Sorting from "./components/procen_ng/percen_Downtime_Zone_sorting";
 import NGlotrecord from "./components/NGlotrecord/NGlotrecord"
-
+import NGRatiorecord from "./components/NGratiorecord/NGratiorecord"
+import NGratiomonthly from "./components/NGratiorecord/NGrationmonthly"
 // import TargetPage from './TargetPage';
 
+
+import LAR_BY_TEAM_PRODUCTION_LINK from "./components/OPT/link_Opertor_tracking_data";
 const SecuredRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -494,6 +498,10 @@ export default class App extends Component {
             <SecuredRoute path="/Downtime_Zone_QA" component={Downtime_Zone_QA} />
             <SecuredRoute path="/Downtime_Zone_Sorting" component={Downtime_Zone_Sorting} />
             <SecuredRoute path="/NG_lotrecord" component={NGlotrecord} /> 
+            <SecuredRoute path="/NGratiomonitoring" component={NGRatiorecord} /> 
+            <SecuredRoute path="/NGratiomonthlymonitoring" component={NGratiomonthly} />    
+            <SecuredRoute path="/LAR_BY_TEAM_PRODUCTION_LINK" component={LAR_BY_TEAM_PRODUCTION_LINK} />    
+
             <Route exact={true} path="/" component={this.redirectToLogin} />
             <Route exact={true} path="*" component={this.redirectToLogin} />
           </Switch>{" "}

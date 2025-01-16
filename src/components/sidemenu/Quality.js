@@ -211,6 +211,15 @@ class Quality extends Component {
                                         Master Dashboard Monitoring
                                         </a>
                             
+                                   
+                                        <li className="breadcrumb-item">
+                                        <a href="/NGratiomonitoring">
+                                        Top 10 Defect Monitoring
+                                        </a>
+                            
+                        
+                            
+                                      </li>
                                       </li>
                                       </li>
                            
